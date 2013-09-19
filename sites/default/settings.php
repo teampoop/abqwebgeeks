@@ -205,9 +205,9 @@ $databases = array (
   array (
     'default' => 
     array (
-      'database' => 'demo-drupal-quickstart',
+      'database' => 'abqwebgeeks',
       'username' => 'root',
-      'password' => 'root',
+      'password' => 'stupid',
       'host' => 'localhost',
       'port' => '',
       'driver' => 'mysql',
@@ -246,7 +246,7 @@ $update_free_access = FALSE;
  *   $drupal_hash_salt = file_get_contents('/home/example/salt.txt');
  *
  */
-$drupal_hash_salt = 'KNh9sQCh4ExAvGJBQE7zr4N99pFDAqCvK7k84kYfpgE';
+$drupal_hash_salt = 'cuv6SwUpadtWfVZxmFAIdk-HwWjhDG_I8vrO-cVs2CQ';
 
 /**
  * Base URL (optional).
