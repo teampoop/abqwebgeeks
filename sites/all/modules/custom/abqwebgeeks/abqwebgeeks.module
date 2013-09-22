@@ -65,6 +65,7 @@ function abqwebgeeks_import() {
     );
     $node->locations[0] = $location;
     $node->field_eventbrite_url[LANGUAGE_NONE][0]['value'] = $event->url;
+    $node->path['pathauto'] = TRUE;
     node_save($node);
     $out[] =  $node->nid . $msg;
   }
