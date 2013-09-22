@@ -2,21 +2,22 @@
 
 function abqwebgeeks_menu() {
   $items = array();
-  $items['admin/content/abqwebgeeks-test'] = array(
-    'title' => 'Webgeeks Test',
-    'page callback' => 'abqwebgeeks_test',
+  $items['admin/content/abqwebgeeks-import'] = array(
+    'title' => 'Eventbrite Import',
+    'page callback' => 'abqwebgeeks_import',
     'access callback' => TRUE,
   );
 
   return $items;
 }
 
-function abqwebgeeks_test() {
+function abqwebgeeks_import() {
   include_once libraries_get_path('eventbrite') . '/Eventbrite.php';
   $authentication_tokens = array('app_key'  => variable_get('eventbrite_app_key'),
                                  'user_key' => variable_get('eventbrite_user_key'));
   $eb_client = new Eventbrite( $authentication_tokens );
   $events = $eb_client->user_list_events();
+  $out = array('Eventbrite Data imported!');
   foreach($events->events as $event) {
     $event = $event->event;
     unset($event->venue->country);
@@ -27,13 +28,10 @@ function abqwebgeeks_test() {
       ->fieldCondition('field_eventbright_id', 'value', $id)
       ->execute();
     if(isset($r['node'])) {
-      $msg = ' has been found for ' . $event->title;
       $nids = array_keys($r['node']);
-      $nid = reset($nids);
-      $node = node_load($nid);
+      $out[] = reset($nids) . ' has been found for ' . $event->title;
     }
     else {
-      $msg = ' has been created';
       $node = new stdClass();
       $node->type = 'webgeek_event';
       $node->language = LANGUAGE_NONE;
@@ -51,7 +49,9 @@ function abqwebgeeks_test() {
       $node->locations[0] = (array) $event->venue;
       $node->field_eventbrite_url[LANGUAGE_NONE][0]['value'] = $event->url;
       node_save($node);
+      $out[] = $node->nid . ' has been created';
     }
-    print $node->nid . $msg . '<br/>';
   }
+  dsm($out);
+  drupal_goto('/');
 }
