@@ -12,6 +12,7 @@ web1: #component type & number
     - pdo_mysql
     - mcrypt
     - mbstring
+    - uploadprogress
   after_build:
     # move pagoda config file
     - "mv pagoda/settings.php sites/default/settings.php"
