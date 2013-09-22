@@ -41,19 +41,15 @@ function abqwebgeeks_import() {
       ->fieldCondition('field_eventbright_id', 'value', $id)
       ->execute();
     if(isset($r['node'])) {
-      $msg = ' has been found for ' . $event->title;
-      $nids = array_keys($r['node']);
-      $nid = reset($nids);
-      $node = node_load($nid);
+      $out[] = $event->title . ' exists. skipping.';
+      continue;
     }
-    else {
-      $msg = ' has been created';
-      $node = new stdClass();
-      $node->type = 'webgeek_event';
-      $node->language = LANGUAGE_NONE;
-      node_object_prepare($node);
-      $node->field_eventbright_id[LANGUAGE_NONE][0]['value'] = $id;
-    }
+    $node = new stdClass();
+    $node->type = 'webgeek_event';
+    $node->language = LANGUAGE_NONE;
+    node_object_prepare($node);
+    $node->field_eventbright_id[LANGUAGE_NONE][0]['value'] = $id;
+
     $node->title = $event->title;
     $node->body[LANGUAGE_NONE][0] = array(
       'value' => $event->description,
@@ -67,7 +63,7 @@ function abqwebgeeks_import() {
     $node->field_eventbrite_url[LANGUAGE_NONE][0]['value'] = $event->url;
     $node->path['pathauto'] = TRUE;
     node_save($node);
-    $out[] =  $node->nid . $msg;
+    $out[] =  $node->nid . ' has been created';
   }
   drupal_set_message(implode('<br/>', $out));
   drupal_goto();
