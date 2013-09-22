@@ -1,0 +1,9 @@
+name = ABQWebgeeks
+description = Custom shit
+core = 7.x
+package = ABQWebgeeks
+
+dependencies[] = date_api
+dependencies[] = libraries
+dependencies[] = locale
+dependencies[] = eventbrite

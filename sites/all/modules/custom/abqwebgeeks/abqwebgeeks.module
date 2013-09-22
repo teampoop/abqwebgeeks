@@ -1,0 +1,59 @@
+<?php
+
+function abqwebgeeks_menu() {
+  $items = array();
+  $items['admin/content/abqwebgeeks-test'] = array(
+    'title' => 'Webgeeks Test',
+    'page callback' => 'abqwebgeeks_test',
+    'access callback' => TRUE,
+  );
+
+  return $items;
+}
+
+function abqwebgeeks_test() {
+  include_once libraries_get_path('eventbrite') . '/Eventbrite.php';
+  $authentication_tokens = array('app_key'  => variable_get('eventbrite_app_key'),
+                                 'user_key' => variable_get('eventbrite_user_key'));
+  $eb_client = new Eventbrite( $authentication_tokens );
+  $events = $eb_client->user_list_events();
+  kpr($events);
+  $testnode = node_load(1);
+  kpr($testnode);
+  foreach($events->events as $event) {
+    $event = $event->event;
+    unset($event->venue->country);
+    $id = $event->id;
+    $efq = new EntityFieldQuery();
+    $r = $efq->entityCondition('entity_type', 'node')
+      ->entityCondition('bundle', 'webgeek_event')
+      ->fieldCondition('field_eventbright_id', 'value', $id)
+      ->execute();
+    if(isset($r['node'])) {
+      $msg = ' has been updated';
+      $nid = reset(array_keys($r['node']));
+      $node = node_load($nid);
+    }
+    else {
+      $msg = ' has been created';
+      $node = new stdClass();
+      $node->type = 'webgeek_event';
+      $node->language = LANGUAGE_NONE;
+      node_object_prepare($node);
+      $node->field_eventbright_id[LANGUAGE_NONE][0]['value'] = $id;
+    }
+    $node->title = $event->title;
+    $node->body[LANGUAGE_NONE][0] = array(
+      'value' => $event->description,
+      'format' => 'full_html',
+    );
+    $node->field_date_and_time[LANGUAGE_NONE][0] = array(
+      'value' => strtotime($event->start_date),
+      'value2' => strtotime($event->end_date),
+    );
+    $node->locations[0] = (array) $event->venue;
+    $node->field_eventbrite_url[LANGUAGE_NONE][0]['value'] = $event->url;
+    node_save($node);
+    print $node->nid . $msg . '<br/>';
+  }
+}
