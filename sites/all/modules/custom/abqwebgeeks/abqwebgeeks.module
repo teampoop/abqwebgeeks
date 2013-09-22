@@ -17,10 +17,23 @@ function abqwebgeeks_import() {
                                  'user_key' => variable_get('eventbrite_user_key'));
   $eb_client = new Eventbrite( $authentication_tokens );
   $events = $eb_client->user_list_events();
-  $out = array('Eventbrite Data imported!');
+  $out = array('<b>Eventbrite content Imported!</b>');
   foreach($events->events as $event) {
+
     $event = $event->event;
-    unset($event->venue->country);
+    $venue = $event->venue;
+    $location = array(
+      'name' => $venue->name,
+      'street' => $venue->address,
+      'additional' => $venue->address_2,
+      'city' => $venue->city,
+      'province' => $venue->region,
+      'postal_code' => $venue->postal_code,
+      'country' => strtolower($venue->country_code),
+      'latitude' => $venue->latitude,
+      'longitude' => $venue->longitude,
+    );
+
     $id = $event->id;
     $efq = new EntityFieldQuery();
     $r = $efq->entityCondition('entity_type', 'node')
@@ -28,30 +41,33 @@ function abqwebgeeks_import() {
       ->fieldCondition('field_eventbright_id', 'value', $id)
       ->execute();
     if(isset($r['node'])) {
+      $msg = ' has been found for ' . $event->title;
       $nids = array_keys($r['node']);
-      $out[] = reset($nids) . ' has been found for ' . $event->title;
+      $nid = reset($nids);
+      $node = node_load($nid);
     }
     else {
+      $msg = ' has been created';
       $node = new stdClass();
       $node->type = 'webgeek_event';
       $node->language = LANGUAGE_NONE;
       node_object_prepare($node);
       $node->field_eventbright_id[LANGUAGE_NONE][0]['value'] = $id;
-      $node->title = $event->title;
-      $node->body[LANGUAGE_NONE][0] = array(
-        'value' => $event->description,
-        'format' => 'full_html',
-      );
-      $node->field_date_and_time[LANGUAGE_NONE][0] = array(
-        'value' => strtotime($event->start_date),
-        'value2' => strtotime($event->end_date),
-      );
-      $node->locations[0] = (array) $event->venue;
-      $node->field_eventbrite_url[LANGUAGE_NONE][0]['value'] = $event->url;
-      node_save($node);
-      $out[] = $node->nid . ' has been created';
     }
+    $node->title = $event->title;
+    $node->body[LANGUAGE_NONE][0] = array(
+      'value' => $event->description,
+      'format' => 'full_html',
+    );
+    $node->field_date_and_time[LANGUAGE_NONE][0] = array(
+      'value' => strtotime($event->start_date),
+      'value2' => strtotime($event->end_date),
+    );
+    $node->locations[0] = $location;
+    $node->field_eventbrite_url[LANGUAGE_NONE][0]['value'] = $event->url;
+    node_save($node);
+    $out[] =  $node->nid . $msg;
   }
-  dsm($out);
-  drupal_goto('/');
+  drupal_set_message(implode('<br/>', $out));
+  drupal_goto();
 }
