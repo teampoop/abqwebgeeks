@@ -1,0 +1,54 @@
+/*
+Syntax error: File to import not found or unreadable: compass/support.
+              Load path: /Library/WebServer/Documents/abqwebgeeks/sites/all/themes/abqwebgeeks/sass
+        on line 115 of _init.scss
+        from line 7 of styles-rtl.scss
+
+Backtrace:
+_init.scss:115
+styles-rtl.scss:7
+/Users/markie/.rvm/gems/ruby-1.9.3-p194/gems/sass-3.2.9/lib/sass/tree/import_node.rb:67:in `rescue in import'
+/Users/markie/.rvm/gems/ruby-1.9.3-p194/gems/sass-3.2.9/lib/sass/tree/import_node.rb:45:in `import'
+/Users/markie/.rvm/gems/ruby-1.9.3-p194/gems/sass-3.2.9/lib/sass/tree/import_node.rb:28:in `imported_file'
+/Users/markie/.rvm/gems/ruby-1.9.3-p194/gems/sass-3.2.9/lib/sass/tree/import_node.rb:37:in `css_import?'
+/Users/markie/.rvm/gems/ruby-1.9.3-p194/gems/sass-3.2.9/lib/sass/tree/visitors/perform.rb:217:in `visit_import'
+/Users/markie/.rvm/gems/ruby-1.9.3-p194/gems/sass-3.2.9/lib/sass/tree/visitors/base.rb:37:in `visit'
+/Users/markie/.rvm/gems/ruby-1.9.3-p194/gems/sass-3.2.9/lib/sass/tree/visitors/perform.rb:100:in `visit'
+/Users/markie/.rvm/gems/ruby-1.9.3-p194/gems/sass-3.2.9/lib/sass/tree/visitors/perform.rb:227:in `block in visit_import'
+/Users/markie/.rvm/gems/ruby-1.9.3-p194/gems/sass-3.2.9/lib/sass/tree/visitors/perform.rb:227:in `map'
+/Users/markie/.rvm/gems/ruby-1.9.3-p194/gems/sass-3.2.9/lib/sass/tree/visitors/perform.rb:227:in `visit_import'
+/Users/markie/.rvm/gems/ruby-1.9.3-p194/gems/sass-3.2.9/lib/sass/tree/visitors/base.rb:37:in `visit'
+/Users/markie/.rvm/gems/ruby-1.9.3-p194/gems/sass-3.2.9/lib/sass/tree/visitors/perform.rb:100:in `visit'
+/Users/markie/.rvm/gems/ruby-1.9.3-p194/gems/sass-3.2.9/lib/sass/tree/visitors/base.rb:53:in `block in visit_children'
+/Users/markie/.rvm/gems/ruby-1.9.3-p194/gems/sass-3.2.9/lib/sass/tree/visitors/base.rb:53:in `map'
+/Users/markie/.rvm/gems/ruby-1.9.3-p194/gems/sass-3.2.9/lib/sass/tree/visitors/base.rb:53:in `visit_children'
+/Users/markie/.rvm/gems/ruby-1.9.3-p194/gems/sass-3.2.9/lib/sass/tree/visitors/perform.rb:109:in `block in visit_children'
+/Users/markie/.rvm/gems/ruby-1.9.3-p194/gems/sass-3.2.9/lib/sass/tree/visitors/perform.rb:121:in `with_environment'
+/Users/markie/.rvm/gems/ruby-1.9.3-p194/gems/sass-3.2.9/lib/sass/tree/visitors/perform.rb:108:in `visit_children'
+/Users/markie/.rvm/gems/ruby-1.9.3-p194/gems/sass-3.2.9/lib/sass/tree/visitors/base.rb:37:in `block in visit'
+/Users/markie/.rvm/gems/ruby-1.9.3-p194/gems/sass-3.2.9/lib/sass/tree/visitors/perform.rb:128:in `visit_root'
+/Users/markie/.rvm/gems/ruby-1.9.3-p194/gems/sass-3.2.9/lib/sass/tree/visitors/base.rb:37:in `visit'
+/Users/markie/.rvm/gems/ruby-1.9.3-p194/gems/sass-3.2.9/lib/sass/tree/visitors/perform.rb:100:in `visit'
+/Users/markie/.rvm/gems/ruby-1.9.3-p194/gems/sass-3.2.9/lib/sass/tree/visitors/perform.rb:7:in `visit'
+/Users/markie/.rvm/gems/ruby-1.9.3-p194/gems/sass-3.2.9/lib/sass/tree/root_node.rb:20:in `render'
+/Users/markie/.rvm/gems/ruby-1.9.3-p194/gems/sass-3.2.9/lib/sass/engine.rb:315:in `_render'
+/Users/markie/.rvm/gems/ruby-1.9.3-p194/gems/sass-3.2.9/lib/sass/engine.rb:262:in `render'
+/Users/markie/.rvm/gems/ruby-1.9.3-p194/gems/sass-3.2.9/lib/sass/plugin/compiler.rb:362:in `update_stylesheet'
+/Users/markie/.rvm/gems/ruby-1.9.3-p194/gems/sass-3.2.9/lib/sass/plugin/compiler.rb:203:in `block in update_stylesheets'
+/Users/markie/.rvm/gems/ruby-1.9.3-p194/gems/sass-3.2.9/lib/sass/plugin/compiler.rb:201:in `each'
+/Users/markie/.rvm/gems/ruby-1.9.3-p194/gems/sass-3.2.9/lib/sass/plugin/compiler.rb:201:in `update_stylesheets'
+/Users/markie/.rvm/gems/ruby-1.9.3-p194/gems/sass-3.2.9/lib/sass/plugin.rb:81:in `update_stylesheets'
+/Users/markie/.rvm/gems/ruby-1.9.3-p194/gems/sass-3.2.9/lib/sass/exec.rb:432:in `watch_or_update'
+/Users/markie/.rvm/gems/ruby-1.9.3-p194/gems/sass-3.2.9/lib/sass/exec.rb:315:in `process_result'
+/Users/markie/.rvm/gems/ruby-1.9.3-p194/gems/sass-3.2.9/lib/sass/exec.rb:41:in `parse'
+/Users/markie/.rvm/gems/ruby-1.9.3-p194/gems/sass-3.2.9/lib/sass/exec.rb:21:in `parse!'
+/Users/markie/.rvm/gems/ruby-1.9.3-p194/gems/sass-3.2.9/bin/scss:9:in `<top (required)>'
+/Users/markie/.rvm/gems/ruby-1.9.3-p194/bin/scss:19:in `load'
+/Users/markie/.rvm/gems/ruby-1.9.3-p194/bin/scss:19:in `<main>'
+/Users/markie/.rvm/gems/ruby-1.9.3-p194/bin/ruby_noexec_wrapper:14:in `eval'
+/Users/markie/.rvm/gems/ruby-1.9.3-p194/bin/ruby_noexec_wrapper:14:in `<main>'
+*/
+body:before {
+  white-space: pre;
+  font-family: monospace;
+  content: "Syntax error: File to import not found or unreadable: compass/support.\A               Load path: /Library/WebServer/Documents/abqwebgeeks/sites/all/themes/abqwebgeeks/sass\A         on line 115 of _init.scss\A         from line 7 of styles-rtl.scss"; }
