@@ -22,7 +22,7 @@
 /* @import "theme-B.css"; */
 
 body {
-  background: #8AEEEE ;
+  background: #34DDDD ;
 }
 #page {
   background: #fff;
@@ -32,4 +32,28 @@ body {
 a {
   text-decoration: none;
   color: #A61414;
+}
+
+#header {
+  position: relative;
+}
+#site-slogan {
+  position: absolute;
+  bottom: 10px;
+  left: 40px;
+  font-size: 50%;
+  font-style: italic;
+}
+
+#navigation {
+  top: 113px;
+  left: 380px;
+  background-color: #FFBE3C;
+  width: 820px;
+  height: auto;
+}
+
+#main {
+  padding-top: 5px;
+  border-top: 5px solid #ff6666;
 }

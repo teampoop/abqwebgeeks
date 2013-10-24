@@ -53,7 +53,7 @@ function abqwebgeeks_import() {
     $node->title = $event->title;
     $node->body[LANGUAGE_NONE][0] = array(
       'value' => $event->description,
-      'format' => 'full_html',
+      'format' => 'filtered_html',
     );
     $node->field_date_and_time[LANGUAGE_NONE][0] = array(
       'value' => strtotime($event->start_date),
