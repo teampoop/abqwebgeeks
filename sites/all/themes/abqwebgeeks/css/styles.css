@@ -76,3 +76,13 @@ a {
 .date-prev {
   right: 55px;
 }
+
+.view-display-id-upcoming_block .view-footer {
+  text-align: right;
+  background-color: #34dddd;
+  width: 50%;
+  border-radius: 5px 0 0 5px;
+  position: absolute;
+  right: 0;
+  padding-right: 5px;
+}
