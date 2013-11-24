@@ -68,3 +68,11 @@ a {
   padding-top: 5px;
   border-top: 5px solid #ff6666;
 }
+
+.date-nav ul {
+  list-style: none;
+}
+
+.date-prev {
+  right: 55px;
+}
