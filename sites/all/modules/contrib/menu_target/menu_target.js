@@ -1,10 +1,9 @@
-// $Id: menu_target.js, v 7.0, 2011/06/17 09:07:27, skilip Exp $
 
 (function ($) {
 
   /**
    * Attaches 'open in new window' behavior to links with the 'target-blank' class.
-   * This is used as a replacement of the regular 'target' attribute which is depricated 
+   * This is used as a replacement of the regular 'target' attribute which is deprecated
    * since XHTML 1.1.
    */
   Drupal.behaviors.targetBlank = {

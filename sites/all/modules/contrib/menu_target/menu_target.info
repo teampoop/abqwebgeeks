@@ -1,17 +1,13 @@
-; $Id: menu_target.info, v 7.0, 2011/06/17 09:07:27, skilip Exp $
 name = Menu target
 description = Allows administrators to choose wether or not to open menu items in a new window.
 package = Other
-version = VERSION
 core = 7.x
 
-files[] = menu_target.module
-files[] = menu_target.admin.inc
-
 configure = admin/structure/menu/settings
-; Information added by drupal.org packaging script on 2012-11-09
-version = "7.x-1.0"
+
+; Information added by Drupal.org packaging script on 2014-06-19
+version = "7.x-1.2"
 core = "7.x"
 project = "menu_target"
-datestamp = "1352445402"
+datestamp = "1403160231"
 

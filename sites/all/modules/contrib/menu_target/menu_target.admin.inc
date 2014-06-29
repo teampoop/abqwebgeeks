@@ -1,14 +1,13 @@
 <?php
-// $Id: menu_target.module, v 7.0, 2011/06/17 09:07:27, skilip Exp $
 
 /**
  * @file
- *
- * Allows content editors to choose wether or not to open menu items in a new window
+ * Allows content editors to choose wether or not to open menu items in a new
+ * window
  */
 
 /**
- * Adds aextra form elements to either node_form or menu_item_edit_form.
+ * Adds extra form elements to either node_form or menu_item_edit_form.
  *
  * @see menu_target_form_alter()
  */
@@ -25,9 +24,13 @@ function menu_target_edit_form_extra_elements(&$form, $node_form) {
   // Only add extra form elements if the menu target functionality is enabled.
   if (variable_get('menu_target_enabled', 1)) {
 
-    // The achor (<a>) attribute is configurable in the menu configuration form (admin/structure/menu/settings).
-    // If it is chosen to use valid XHTML, we will use class="target-blank" and JavaScript will open the link in a
-    // new window. If it us chosen to use a degradable workflow, we will use target="_blank".
+    // The achor (<a>) attribute is configurable in the menu configuration
+    // form
+    // (admin/structure/menu/settings).
+    // If it is chosen to use valid XHTML, we will use class="target-blank" and
+    // JavaScript will open the link in a
+    // new window. If it us chosen to use a degradable workflow, we will
+    // use target="_blank".
     $attribute = (variable_get('menu_target_type', 'html') == 'html' ? 'target' : 'class');
     $attribute_value = ($attribute == 'target' ? '_blank' : 'target-blank');
 
@@ -38,7 +41,7 @@ function menu_target_edit_form_extra_elements(&$form, $node_form) {
     $target = array(
       '#type' => ($attribute == 'html' ? 'select' : 'checkbox'),
       '#title' => t('Open this link in a new window'),
-      '#default_value' => (isset($options['attributes']) && isset($options['attributes'][$attribute]) && in_array($attribute_value, $options['attributes'][$attribute])),
+      '#default_value' => (isset($options['attributes']) && isset($options['attributes'][$attribute]) && in_array($attribute_value, $options['attributes'])),
     );
 
     // Depanding on the form type, this element is placed in the
@@ -69,12 +72,14 @@ function menu_target_edit_form_extra_elements(&$form, $node_form) {
  */
 function _menu_target_edit_form_extra_elements_submit($form, &$form_state) {
 
-  // Determine the attribute and the right attribute value.
+  // Determine the attribute and the right attribute
+  // value.
   $attribute = (variable_get('menu_target_type', 'html') == 'html' ? 'target' : 'class');
   $attribute_value = ($attribute == 'target' ? '_blank' : 'target-blank');
 
-  // Depending on whether we're in a node form or a menu item form, the 'menu link'
-  // values are stored in a diffrent place of the form state values tree
+  // Depending on whether we're in a node form or a menu item form, the
+  // 'menu link' values are stored in a diffrent place of the form state values
+  // tree.
   if (isset($form['#node'])) {
     $values = &$form_state['values']['menu'];
   }
@@ -84,21 +89,23 @@ function _menu_target_edit_form_extra_elements_submit($form, &$form_state) {
 
   // If the user has checked the 'open in new window' checkbox,
   // we'll add the right attribute and it's value to the menu's options array.
-  if ($values['target']) {
+  if ($values['target'] == 0) {
     if (!isset($values['options']['attributes'])) {
       $values['options']['attributes'] = array($attribute => array($attribute_value));
     }
     elseif (!isset($values['options']['attributes'][$attribute])) {
       $values['options']['attributes'][$attribute] = array($attribute_value);
     }
-    elseif (!in_array($attribute_value, $values['options']['attributes'][$attribute])) {
-      $values['options']['attributes'][$attribute][] = $attribute_value;
+    elseif (!in_array($attribute_value, $values['options']['attributes'])) {
+      $values['options']['attributes'][$attribute] = $attribute_value;
     }
   }
   else {
     // Clean up the attributes class array.
-    if (isset($values['options']['attributes']) && isset($values['options']['attributes'][$attribute]) && in_array($attribute_value, $values['options']['attributes'][$attribute])) {
-      unset($values['options']['attributes'][$attribute][array_search($attribute_value, $values['options']['attributes'][$attribute])]);
+    if (isset($values['options']['attributes'])
+      && isset($values['options']['attributes'])
+      && in_array($attribute_value, $values['options']['attributes'])) {
+      unset($values['options']['attributes'][array_search($attribute_value, $values['options']['attributes'])]);
       if (empty($values['options']['attributes'][$attribute])) {
         unset($values['options']['attributes'][$attribute]);
       }
@@ -107,9 +114,7 @@ function _menu_target_edit_form_extra_elements_submit($form, &$form_state) {
 }
 
 /**
- * Adds extra form elements to the menu_configure form.
- * Allows administrators to enable or disable the Menu target functionality on a menu base.
- *
+ * Allows users to enable or disable the Menu target functionality on menu base.
  * @see menu_target_form_menu_configure_alter()
  */
 function menu_target_menu_configure_extra_elements(&$form) {
@@ -121,7 +126,7 @@ function menu_target_menu_configure_extra_elements(&$form) {
     '#type' => 'checkbox',
     '#title' => t('Menu target enabled'),
     '#default_value' => variable_get('menu_target_enabled', 1),
-  );  
+  );
   $form['menu_target']['menu_target_settings'] = array(
     '#type' => 'container',
     '#states' => array(
@@ -135,13 +140,12 @@ function menu_target_menu_configure_extra_elements(&$form) {
     '#title' => t('Type'),
     '#options' => array('html' => t('Degradable'), 'javascript' => t('XHTML Valid')),
     '#default_value' => variable_get('menu_target_type', 'html'),
-    '#description' => t('Here you can choose which behavior is used to open links in new windows. If you choose \'Degradable\', the HTML !link1 attribute will be used. While this attribute does not validate for XHTML doctypes since version 1.1, you can also choose to use the \'XHTML valid\' option. This will use JavaScript to open links in a new window', array('!link1' => l('target', 'http://www.w3.org/TR/html4/present/frames.html#adef-target'))),
+    '#description' => t("Here you can choose which behavior is used to open links in new windows. If you choose 'Degradable', the HTML !link1 attribute will be used. While this attribute does not validate for XHTML doctypes since version 1.1, you can also choose to use the 'XHTML valid' option. This will use JavaScript to open links in a new window", array('!link1' => l(t('target'), 'http://www.w3.org/TR/html4/present/frames.html#adef-target'))),
   );
   $form['#submit'][] = 'menu_target_menu_configure_extra_elements_submit';
 }
 
 /**
- * Extra submit callback for the menu edit form.
  * Saves the Menu Target settings for a menu.
  */
 function menu_target_menu_configure_extra_elements_submit($form, &$form_state) {
@@ -158,7 +162,7 @@ function menu_target_menu_configure_extra_elements_submit($form, &$form_state) {
 }
 
 /**
- * Helper function for updating all menu link target or class attributes when the configurations has been changed.
+ * Helper function for updating all menu link target or class attributes.
  */
 function _menu_target_menu_links_update_target($menu_target_type) {
   $old_attribute = ($menu_target_type == 'html' ? 'class' : 'target');
@@ -166,7 +170,7 @@ function _menu_target_menu_links_update_target($menu_target_type) {
   $new_attribute = ($menu_target_type == 'html' ? 'target' : 'class');
   $new_value = ($menu_target_type == 'html' ? '_blank' : 'target-blank');
 
-  foreach (db_query("SELECT mlid, options FROM {menu_links} WHERE options != ''") as $menu_item) {
+  foreach (db_query("SELECT mlid, options FROM {menu_links} WHERE options <> ''") as $menu_item) {
     $menu_item->options = unserialize($menu_item->options);
 
     if (isset($menu_item->options['attributes'])) {
