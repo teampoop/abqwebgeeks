@@ -362,7 +362,7 @@ function eventbrite_og_field_access($op, $field, $account, $node = NULL) {
       case 'view':
       case 'edit':
         // Check if there is a group context
-        if (og_is_group_post_type($node->type) && ($group_node = og_get_group_context($node->type))) {
+        if (og_is_group_post_type($node->type) && ($group_node = og_context($node->type))) {
           $allowed_auth_methods = variable_get('eventbrite_og_auth_method_' . $group_node->type, array());
           if (empty($allowed_auth_methods)) {
             // Do not show this field if the group type has not been Eventbrite enabled.
@@ -383,7 +383,7 @@ function eventbrite_og_field_access($op, $field, $account, $node = NULL) {
  */
 function eventbrite_og_eventbrite_request_alter(&$request) {
   // Check if there is a group context
-  if ($group_node = og_get_group_context()) {
+  if ($group_node = og_context()) {
     // Check which method of auth is being used for this group
     if ($group_node->eventbrite_og_enabled) {
       switch ($group_node->eventbrite_og_enabled) {
@@ -436,7 +436,7 @@ function eventbrite_og_eventbrite_request_alter(&$request) {
  */
 function eventbrite_og_eventbrite_default_payment_settings() {
   // Check if there is a group context
-  if ($group_node = og_get_group_context()) {
+  if ($group_node = og_context()) {
     // Check if this group has had Eventbrite functionality enabled
     if ($group_node->eventbrite_og_enabled) {
       return $group_node->eventbrite_og_default_payment_settings;
@@ -449,7 +449,7 @@ function eventbrite_og_eventbrite_default_payment_settings() {
  */
 function eventbrite_og_eventbrite_venue_new($venue) {
   // Check if there is a group context
-  if ($group_node = og_get_group_context()) {
+  if ($group_node = og_context()) {
     // Check if this group has had Eventbrite functionality enabled
     if (EVENTBRITE_OG_SUBUSER == $group_node->eventbrite_og_enabled) {
       // This is a subuser group.  Venue should be added to subusers enabled venues
@@ -466,7 +466,7 @@ function eventbrite_og_get_enabled_organizers($group_node) {
   switch ($group_node->eventbrite_og_enabled) {
     case EVENTBRITE_OG_CUSTOM:
       // If there is no group context, set it--it is needed to get custom organizers from Eventbrite
-      if (!og_get_group_context()) {
+      if (!og_context()) {
         og_set_group_context($group_node);
       }
       if ($custom_organizers = eventbrite_get('user_list_organizers')) {
@@ -491,7 +491,7 @@ function eventbrite_og_get_enabled_venues($group_node) {
   switch ($group_node->eventbrite_og_enabled) {
     case EVENTBRITE_OG_CUSTOM:
       // If there is no group context, set it--it is needed to get custom venues from Eventbrite
-      if (!og_get_group_context()) {
+      if (!og_context()) {
         og_set_group_context($group_node);
       }
       if ($custom_venues = eventbrite_get('user_list_venues')) {

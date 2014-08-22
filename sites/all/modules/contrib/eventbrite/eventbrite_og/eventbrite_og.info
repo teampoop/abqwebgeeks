@@ -1,23 +1,18 @@
 name = Eventbrite Groups
 description = Allow a user to enter their Eventbrite User Key and feed events from their user.
-version = "6.x-2.x-dev"
 core = 7.x
 package = Eventbrite
 
 dependencies[] = eventbrite
-dependencies[] = eventbrite_cck
+dependencies[] = eventbritefield
 dependencies[] = og
+dependencies[] = og_context
 
-; Information added by drupal.org packaging script on 2012-09-08
-version = "6.x-2.0-beta2+10-dev"
-core = 6.x
-project = "eventbrite"
-datestamp = "1347064086"
+files[] = eventbrite_og.test
 
-
-; Information added by drupal.org packaging script on 2013-09-18
-version = "7.x-2.0-alpha2"
+; Information added by Drupal.org packaging script on 2014-08-06
+version = "7.x-2.0-alpha3"
 core = "7.x"
 project = "eventbrite"
-datestamp = "1379529800"
+datestamp = "1407355128"
 

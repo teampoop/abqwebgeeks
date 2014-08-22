@@ -50,16 +50,3 @@ php file is at sites/all/libraries/eventbrite/Eventbrite.php.
 Enable the Eventbrite and Eventbrite Field modules.
 
 Go to admin/config/services/eventbrite/api and enter the keys.
-
-
-Usage
------
-
-Add a new field of type Eventbrite to a content type on your site. If you choose
-widget type "autocomplete", the autocomplete will only search for events created
-by the user whose key is saved on the configuration page, but it will still be
-possible to type in any event ID.
-
-Go to "Manage display" page for your content type and choose whether to display
-the event as a link to the event on eventbrite.com or a registration widget
-(uses an iframe).

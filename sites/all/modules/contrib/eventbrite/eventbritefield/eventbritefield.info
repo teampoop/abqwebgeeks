@@ -4,18 +4,17 @@ dependencies[] = text
 dependencies[] = eventbrite
 
 core = 7.x
-files[] = eventbritefield.install
-files[] = eventbritefield.module
 
 files[] = views/eventbritefield.views.inc
+files[] = eventbritefield.test
 
 version = "7.x-1.x-dev"
 core = "7.x"
 project = "eventbrite"
 
-; Information added by drupal.org packaging script on 2013-09-18
-version = "7.x-2.0-alpha2"
+; Information added by Drupal.org packaging script on 2014-08-06
+version = "7.x-2.0-alpha3"
 core = "7.x"
 project = "eventbrite"
-datestamp = "1379529800"
+datestamp = "1407355128"
 

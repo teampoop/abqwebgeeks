@@ -156,14 +156,6 @@ function eventbrite_schema() {
 }
 
 /**
- * Implements hook_install().
- */
-function eventbrite_install() {
-  // TODO The drupal_(un)install_schema functions are called automatically in D7.
-  // drupal_install_schema('eventbrite')
-}
-
-/**
  * Remove variables on uninstall.
  */
 function eventbrite_uninstall() {
@@ -176,19 +168,37 @@ function eventbrite_uninstall() {
 }
 
 /**
- * Changes venue_id and organizer_id columns to varchar(10) and url to varchar(50).
+ * Update 7201.
+ *
+ * Changes venue_id and organizer_id columns to varchar(10) and url to
+ * varchar(50).
  */
 function eventbrite_update_7201() {
   db_drop_primary_key('eventbrite_venue');
   db_change_field('eventbrite_venue', 'venue_id', 'venue_id',
-    array('description' => "The Eventbrite venue id.", 'type' => 'varchar', 'length' => 10, 'not null' => TRUE),
+    array(
+      'description' => "The Eventbrite venue id.",
+      'type' => 'varchar',
+      'length' => 10,
+      'not null' => TRUE,
+    ),
     array('primary key' => array('venue_id')));
   db_change_field('eventbrite_venue', 'organizer_id', 'organizer_id',
-    array('description' => "The Eventbrite organizer id.", 'type' => 'varchar', 'length' => 10, 'not null' => FALSE));
-
+    array(
+      'description' => "The Eventbrite organizer id.",
+      'type' => 'varchar',
+      'length' => 10,
+      'not null' => FALSE,
+    )
+  );
   db_drop_primary_key('eventbrite_organizer');
   db_change_field('eventbrite_organizer', 'organizer_id', 'organizer_id',
-    array('description' => "The Eventbrite organizer id.", 'type' => 'varchar', 'length' => 10, 'not null' => TRUE),
+    array(
+      'description' => "The Eventbrite organizer id.",
+      'type' => 'varchar',
+      'length' => 10,
+      'not null' => TRUE,
+    ),
     array('primary key' => array('organizer_id')));
   db_change_field('eventbrite_organizer', 'url', 'url',
     array('type' => 'varchar', 'length' => 50, 'not null' => FALSE));

@@ -7,11 +7,11 @@
 
 module_load_include('inc', 'eventbrite', 'eventbrite.common');
 
-/*
- * This function fetches the user's list of events from Eventbrite
+/**
+ * This function fetches the user's list of events from Eventbrite.
  */
 function _eventbrite_api_get_events() {
-  // Build a new request object
+  // Build a new request object.
   $request = _eventbrite_common_new_request('user_list_events', 'get');
 
   if ($result = _eventbrite_common_process_request($request)) {
@@ -26,14 +26,14 @@ function _eventbrite_api_get_events() {
   }
 }
 
-/*
- * This function fetches the user's list of venues from Eventbrite
+/**
+ * This function fetches the user's list of venues from Eventbrite.
  */
 function _eventbrite_api_get_venues() {
-  // Pull in venue handling functions
+  // Pull in venue handling functions.
   module_load_include('inc', 'eventbrite', 'eventbrite.venue');
 
-  // Build a new request object
+  // Build a new request object.
   $request = _eventbrite_common_new_request('user_list_venues', 'get');
 
   if ($result = _eventbrite_common_process_request($request)) {
@@ -46,11 +46,10 @@ function _eventbrite_api_get_venues() {
 
         // If $result->updated then these venues should be saved to the DB
         // If no caching is allowed then these values may or may not be new
-        // TODO: Look at $result->prev_cache to see if each specific venue has changed before resaving
+        // @todo: Look at $result->prev_cache to see if each specific venue has
+        // changed before resaving.
         if ($result->updated) {
           $venue->user_key = $result->user_key;
-//          $venue->module = $result->module;
-
           eventbrite_venue_save_local($venue);
         }
       }
@@ -59,14 +58,14 @@ function _eventbrite_api_get_venues() {
   }
 }
 
-/*
- * This function fetches the user's list of venues from Eventbrite
+/**
+ * This function fetches the user's list of venues from Eventbrite.
  */
 function _eventbrite_api_get_organizers() {
-  // Pull in venue handling functions
+  // Pull in venue handling functions.
   module_load_include('inc', 'eventbrite', 'eventbrite.organizer');
 
-  // Build a new request object
+  // Build a new request object.
   $request = _eventbrite_common_new_request('user_list_organizers', 'get');
 
   if ($result = _eventbrite_common_process_request($request)) {
@@ -79,7 +78,8 @@ function _eventbrite_api_get_organizers() {
 
         // If $result->updated then these venues should be saved to the DB
         // If no caching is allowed then these values may or may not be new
-        // TODO: Look at $result->prev_cache to see if each specific venue has changed before resaving
+        // @todo: Look at $result->prev_cache to see if each specific venue has
+        // changed before resaving.
         if ($result->updated) {
           $organizer->user_key = $result->user_key;
           eventbrite_organizer_save_local($organizer);
@@ -90,20 +90,22 @@ function _eventbrite_api_get_organizers() {
   }
 }
 
-/*
- * This function fetches one user by user key
+/**
+ * This function fetches one user by user key.
  */
 function _eventbrite_api_get_user($user_key = '', $key_type = '') {
-  // Build a new request object
+  // Build a new request object.
   $request = _eventbrite_common_new_request('user_get', 'get');
 
   switch ($key_type) {
     case 'email':
       $request->params['email'] = $user_key;
       break;
+
     case 'user_id':
       $request->params['user_id'] = $user_key;
       break;
+
     case 'user_key':
       $request->user_key = $user_key;
       break;
@@ -120,11 +122,11 @@ function _eventbrite_api_get_user($user_key = '', $key_type = '') {
   }
 }
 
-/*
- * This function fetches one events by Id
+/**
+ * This function fetches one events by Id.
  */
 function _eventbrite_api_get_event($event_id) {
-  // Build a new request object
+  // Build a new request object.
   $request = _eventbrite_common_new_request('event_get', 'get');
 
   $request->params['id'] = $event_id;
@@ -200,11 +202,12 @@ function _eventbrite_api_populate_organizer($organizer_data) {
 function _eventbrite_api_event_new($event) {
   $request = _eventbrite_common_new_request('event_new', 'save');
 
-  // Add event data to request
+  // Add event data to request.
   $request->params['title'] = $event->title;
   $request->params['description'] = $event->description;
 
-  // Status is always draft on event creation, event_update will be called to update to live
+  // Status is always draft on event creation, event_update will be called to
+  // update to live.
   $request->params['status'] = 'draft';
   $request->params['organizer_id'] = $event->organizer_id;
 
@@ -213,18 +216,18 @@ function _eventbrite_api_event_new($event) {
   $request->params['timezone'] = $event->timezone;
   $request->params['venue_id'] = $event->venue_id;
 
-  // Result will only return if no error
+  // Result will only return if no error.
   if ($result = _eventbrite_common_process_request($request)) {
-    // Populate the event coming back and return it
+    // Populate the event coming back and return it.
     $xml_object = $result->object;
 
     if ($event_id = (string) $xml_object->id) {
 
-      // Record in watchdog
+      // Record in watchdog.
       $message = (string) $xml_object->message;
       watchdog('eventbrite', "Message: %message\nEventbrite Event ID: %id", array('%message' => $message, '%id' => $event_id));
 
-      // Expire the cache of event listing
+      // Expire the cache of event listing.
       _eventbrite_common_cache_expire('user_list_events');
       return $event_id;
     }
@@ -234,13 +237,13 @@ function _eventbrite_api_event_new($event) {
 function _eventbrite_api_user_new($user) {
   $request = _eventbrite_common_new_request('user_new', 'save');
 
-  // Add event data to request
+  // Add event data to request.
   $request->params['email'] = $user->email;
   $request->params['passwd'] = $user->passwd;
 
-  // Result will only return if no error
+  // Result will only return if no error.
   if ($result = _eventbrite_common_process_request($request)) {
-    // Populate the event coming back and return it
+    // Populate the event coming back and return it.
     $xml_object = $result->object;
 
     if ($user_id = (integer) $xml_object->id) {
@@ -248,12 +251,13 @@ function _eventbrite_api_user_new($user) {
       $eb_user->id = $user_id;
       $eb_user->user_key = (string) $xml_object->user_key;
 
-      // Record in watchdog
+      // Record in watchdog.
       $message = (string) $xml_object->message;
       watchdog(
-        'eventbrite',
-        "Message: %message\nEventbrite Subuser ID: %id\nUser key: %user_key",
-        array('%message' => $message, '%id' => $eb_user->id, '%user_key' => $eb_uesr->user_key)
+        'eventbrite', "Message: %message\nEventbrite Subuser ID: %id\nUser key: %user_key", array(
+          '%message' => $message,
+          '%id' => $eb_user->id,
+          '%user_key' => $eb_uesr->user_key)
       );
 
       return $eb_user;
@@ -264,7 +268,7 @@ function _eventbrite_api_user_new($user) {
 function _eventbrite_api_event_update($event) {
   $request = _eventbrite_common_new_request('event_update', 'save');
 
-  // Add event data to request
+  // Add event data to request.
   $request->params['event_id'] = $event->event_id;
   $request->params['title'] = $event->title;
   $request->params['description'] = $event->description;
@@ -276,17 +280,17 @@ function _eventbrite_api_event_update($event) {
   $request->params['timezone'] = $event->timezone;
   $request->params['venue_id'] = $event->venue_id;
 
-  // XML data will only come back if no error
+  // XML data will only come back if no error.
   if ($result = _eventbrite_common_process_request($request)) {
-    // Populate the event coming back and return it
+    // Populate the event coming back and return it.
     $xml_object = $result->object;
 
     if ($event_id = (string) $xml_object->id) {
-      // Record in watchdog
+      // Record in watchdog.
       $message = (string) $xml_object->message;
       watchdog('eventbrite', "Message: %message\nEventbrite Event ID: %id", array('%message' => $message, '%id' => $event_id));
 
-      // Expire the cache of event listing
+      // Expire the cache of event listing.
       _eventbrite_common_cache_expire('event_get', $event_id);
       _eventbrite_common_cache_expire('user_list_events');
 
@@ -298,22 +302,22 @@ function _eventbrite_api_event_update($event) {
 function _eventbrite_api_organizer_update($organizer) {
   $request = _eventbrite_common_new_request('organizer_update', 'save');
 
-  // Add venue data to request
+  // Add venue data to request.
   $request->params['id'] = $organizer->organizer_id;
   $request->params['name'] = $organizer->name;
   $request->params['description'] = $organizer->description;
 
-  // XML data will only come back if no error
+  // XML data will only come back if no error.
   if ($result = _eventbrite_common_process_request($request)) {
-    // Populate the event coming back and return it
+    // Populate the event coming back and return it.
     $xml_object = $result->object;
 
     if ($organizer_id = (integer) $xml_object->id) {
-      // Record in watchdog
+      // Record in watchdog.
       $message = (string) $xml_object->message;
       watchdog('eventbrite', "Message: %message\nEventbrite Organizer ID: %id", array('%message' => $message, '%id' => $organizer_id));
 
-      // TODO: Expire the cache of venue listing
+      // TODO: Expire the cache of venue listing.
       _eventbrite_common_cache_expire('user_list_organizers');
 
       return $organizer_id;
@@ -324,21 +328,21 @@ function _eventbrite_api_organizer_update($organizer) {
 function _eventbrite_api_organizer_new($organizer) {
   $request = _eventbrite_common_new_request('organizer_new', 'save');
 
-  // Add venue data to request
+  // Add venue data to request.
   $request->params['name'] = $organizer->name;
   $request->params['description'] = $organizer->description;
 
-  // XML data will only come back if no error
+  // XML data will only come back if no error.
   if ($result = _eventbrite_common_process_request($request)) {
-    // Populate the event coming back and return it
+    // Populate the event coming back and return it.
     $xml_object = $result->object;
 
     if ($organizer_id = (integer) $xml_object->id) {
-      // Record in watchdog
+      // Record in watchdog.
       $message = (string) $xml_object->message;
       watchdog('eventbrite', "Message: %message\nEventbrite Organizer ID: %id", array('%message' => $message, '%id' => $organizer_id));
 
-      // TODO: Expire the cache of venue listing
+      // @todo: Expire the cache of venue listing.
       _eventbrite_common_cache_expire('user_list_organizers');
 
       return $organizer_id;
@@ -349,7 +353,7 @@ function _eventbrite_api_organizer_new($organizer) {
 function _eventbrite_api_venue_update($venue) {
   $request = _eventbrite_common_new_request('venue_update', 'save');
 
-  // Add venue data to request
+  // Add venue data to request.
   $request->params['id'] = $venue->venue_id;
   $request->params['venue'] = $venue->name;
   $request->params['adress'] = $venue->address;
@@ -359,17 +363,17 @@ function _eventbrite_api_venue_update($venue) {
   $request->params['postal_code'] = $venue->postal_code;
   $request->params['country_code'] = $venue->country_code;
 
-  // XML data will only come back if no error
+  // XML data will only come back if no error.
   if ($result = _eventbrite_common_process_request($request)) {
-    // Populate the event coming back and return it
+    // Populate the event coming back and return it.
     $xml_object = $result->object;
 
     if ($venue_id = (integer) $xml_object->id) {
-      // Record in watchdog
+      // Record in watchdog.
       $message = (string) $xml_object->message;
       watchdog('eventbrite', "Message: %message\nEventbrite Venue ID: %id", array('%message' => $message, '%id' => $venue_id));
 
-      // TODO: Expire the cache of venue listing
+      // TODO: Expire the cache of venue listing.
       _eventbrite_common_cache_expire('user_list_venues');
 
       return $venue_id;
@@ -380,7 +384,7 @@ function _eventbrite_api_venue_update($venue) {
 function _eventbrite_api_venue_new($venue) {
   $request = _eventbrite_common_new_request('venue_new', 'save');
 
-  // Add venue data to request
+  // Add venue data to request.
   $request->params['venue'] = $venue->name;
   $request->params['organizer_id'] = $venue->organizer;
   $request->params['adress'] = $venue->address;
@@ -390,17 +394,17 @@ function _eventbrite_api_venue_new($venue) {
   $request->params['postal_code'] = $venue->postal_code;
   $request->params['country_code'] = $venue->country;
 
-  // XML data will only come back if no error
+  // XML data will only come back if no error.
   if ($result = _eventbrite_common_process_request($request)) {
-    // Populate the event coming back and return it
+    // Populate the event coming back and return it.
     $xml_object = $result->object;
 
     if ($venue_id = (integer) $xml_object->id) {
-      // Record in watchdog
+      // Record in watchdog.
       $message = (string) $xml_object->message;
       watchdog('eventbrite', "Message: %message\nEventbrite Venue ID: %id", array('%message' => $message, '%id' => $venue_id));
 
-      // TODO: Expire the cache of venue listing
+      // @todo: Expire the cache of venue listing.
       _eventbrite_common_cache_expire('user_list_venues');
 
       return $venue_id;
@@ -408,11 +412,10 @@ function _eventbrite_api_venue_new($venue) {
   }
 }
 
-
 function _eventbrite_api_ticket_new($ticket) {
   $request = _eventbrite_common_new_request('ticket_new', 'save');
 
-  // Add ticket data to request
+  // Add ticket data to request.
   $request->params['event_id'] = $ticket->event_id;
   $request->params['name'] = $ticket->name;
   $request->params['quantity'] = $ticket->quantity;
@@ -424,12 +427,12 @@ function _eventbrite_api_ticket_new($ticket) {
     $request->params['is_donation'] = $ticket->is_donation;
   }
 
-  // Result will only return if no error
+  // Result will only return if no error.
   if ($result = _eventbrite_common_process_request($request)) {
-    // Populate the event coming back and return it
+    // Populate the event coming back and return it.
     $xml_object = $result->object;
 
-    // Record in watchdog
+    // Record in watchdog.
     $message = (string) $xml_object->message;
     $ticket_id = (integer) $xml_object->id;
     watchdog('eventbrite', "Message: %message\nEventbrite Ticket ID: %id", array('%message' => $message, '%id' => $ticket_id));
@@ -441,7 +444,7 @@ function _eventbrite_api_ticket_new($ticket) {
 function _eventbrite_api_ticket_update($ticket) {
   $request = _eventbrite_common_new_request('ticket_update', 'save');
 
-  // Add ticket data to request
+  // Add ticket data to request.
   $request->params['id'] = $ticket->id;
   $request->params['name'] = $ticket->name;
   $request->params['quantity'] = $ticket->quantity;
@@ -453,12 +456,12 @@ function _eventbrite_api_ticket_update($ticket) {
     $request->params['is_donation'] = $ticket->is_donation;
   }
 
-  // XML data will only come back if no error
+  // XML data will only come back if no error.
   if ($result = _eventbrite_common_process_request($request)) {
-    // Populate the event coming back and return it
+    // Populate the event coming back and return it.
     $xml_object = $result->object;
 
-    // Record in watchdog
+    // Record in watchdog.
     $message = (string) $xml_data->message;
     $ticket_id = (integer) $xml_object->id;
     watchdog('eventbrite', "Message: %message\nEventbrite Ticket ID: %id", array('%message' => $message, '%id' => $ticket_id));
@@ -470,7 +473,7 @@ function _eventbrite_api_ticket_update($ticket) {
 function _eventbrite_api_payment_update($payment) {
   $request = _eventbrite_common_new_request('payment_update', 'save');
 
-  // Add payment data to request
+  // Add payment data to request.
   $request->params['event_id'] = $payment->event_id;
   $request->params['accept_paypal'] = $payment->accept_paypal;
   $request->params['paypal_email'] = $payment->paypal_email;
@@ -484,19 +487,21 @@ function _eventbrite_api_payment_update($payment) {
   $request->params['accept_invoice'] = $payment->accept_invoice;
   $request->params['instructions_invoice'] = $payment->instructions_invoice;
 
-  // XML data will only come back if no error
+  // XML data will only come back if no error.
   if ($result = _eventbrite_common_process_request($request)) {
-    // Populate the event coming back and return it
+    // Populate the event coming back and return it.
     $xml_object = $result->object;
 
-    // Record in watchdog
+    // Record in watchdog.
     $message = (string) $xml_object->message;
     $event_id = (integer) $xml_object->id;
     $method = (string) $xml_object->method;
     watchdog(
-      'eventbrite',
-      "Message: %message\nEventbrite Payment %method for event %id",
-      array('%message' => $message, '%method' => $method, '%id' => $event_id)
+      'eventbrite', "Message: %message\nEventbrite Payment %method for event %id", array(
+        '%message' => $message,
+        '%method' => $method,
+        '%id' => $event_id
+      )
     );
 
     return $message;

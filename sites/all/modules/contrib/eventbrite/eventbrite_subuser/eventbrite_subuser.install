@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Install hooks for Eventbrite User.
+ * Install, update, and uninstall functions for the Foo Bar module.
  */
 
 /**
@@ -49,20 +49,3 @@ function eventbrite_subuser_schema() {
 
   return $schema;
 }
-
-/**
- * Implements hook_install().
- */
-function eventbrite_subuser_install() {
-  // TODO The drupal_(un)install_schema functions are called automatically in D7.
-  // drupal_install_schema('eventbrite_subuser')
-}
-
-/**
- * Remove variables on uninstall.
- */
-function eventbrite_subuser_uninstall() {
-  // TODO The drupal_(un)install_schema functions are called automatically in D7.
-  // drupal_uninstall_schema('eventbrite_subuser')
-}
-

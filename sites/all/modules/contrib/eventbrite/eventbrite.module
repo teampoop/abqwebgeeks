@@ -1,13 +1,11 @@
 <?php
 
 /**
- * Implements hook_init().
+ * @file
+ * Module file for the Eventbrite module.
  */
-function eventbrite_init() {
-  drupal_add_css(drupal_get_path('module', 'eventbrite') . '/eventbrite.css');
-}
 
-/*
+/**
  * Implements hook_menu().
  */
 function eventbrite_menu() {
@@ -24,7 +22,7 @@ function eventbrite_menu() {
   $items['admin/config/services/eventbrite/api'] = array(
     'title' => 'API Settings',
     'description' => 'Configure Eventbrite API settings',
-    'type' => MENU_LOCAL_TASK,
+    'type' => MENU_DEFAULT_LOCAL_TASK,
     'weight' => -1,
     'access callback' => 'user_access',
     'access arguments' => array('administer site configuration'),
@@ -71,11 +69,11 @@ function eventbrite_menu() {
     'access callback' => 'is_numeric',
     'access arguments' => array(5),
     'file' => 'eventbrite.organizer.inc',
-    'type' => MENU_LOCAL_TASK,
+    'type' => MENU_CALLBACK,
     'weight' => 3,
   );
 
-  // VENUES
+  // VENUES.
 
   $items['admin/config/services/eventbrite/venues'] = array(
     'title' => 'Venues',
@@ -117,7 +115,7 @@ function eventbrite_menu() {
     'access callback' => 'is_numeric',
     'access arguments' => array(5),
     'file' => 'eventbrite.venue.inc',
-    'type' => MENU_LOCAL_TASK,
+    'type' => MENU_CALLBACK,
     'weight' => 3,
   );
 
@@ -187,12 +185,12 @@ function eventbrite_theme() {
   );
 }
 
-/* API FUNCTIONS EXPOSED TO OTHER MODULES
+// API FUNCTIONS EXPOSED TO OTHER MODULES.
 
 /**
  * Allows a get-oriented operation to called via the Eventbrite API.
  *
- * @param $op
+ * @param string $op
  *   The get operation to perform. Allowed operations:
  *   - user_list_events
  *   - user_list_venues
@@ -203,7 +201,7 @@ function eventbrite_theme() {
  *   - user_get_by_id
  *   - user_get_by_key
  *
- * @param $id
+ * @param string|int $id
  *   For the operations user_get_by_email, the user email; for user_get_by_id
  *   and user_get_by_key, the user key.
  */
@@ -213,18 +211,23 @@ function eventbrite_get($op, $id = NULL) {
   switch ($op) {
     case 'user_list_events':
       return _eventbrite_api_get_events();
+
     case 'user_list_venues':
       return _eventbrite_api_get_venues();
+
     case 'user_list_organizers':
       return _eventbrite_api_get_organizers();
+
     case 'event_get':
       if ($id) {
         return _eventbrite_api_get_event($id);
       }
       break;
+
     case 'user_get':
-      // This will ge the master user
+      // This will ge the master user.
       return _eventbrite_api_get_user();
+
     case 'user_get_by_email':
       if ($id) {
         return _eventbrite_api_get_user($id, 'email');
@@ -234,6 +237,7 @@ function eventbrite_get($op, $id = NULL) {
         return _eventbrite_api_get_user($id, 'user_id');
       }
       break;
+
     case 'user_get_by_key':
       if ($id) {
         return _eventbrite_api_get_user($id, 'user_key');
@@ -245,7 +249,7 @@ function eventbrite_get($op, $id = NULL) {
 /**
  * Allows a save-oriented operation to called via the Eventbrite API.
  *
- * @param $op
+ * @param string $op
  *   The get operation to perform. Allowed operations:
  *   - event_new
  *   - event_update
@@ -258,7 +262,7 @@ function eventbrite_get($op, $id = NULL) {
  *   - venue_new
  *   - venue_update
  *
- * @param $object
+ * @param object $object
  *   The event, organizer, payment, ticket, user, or venue object, as
  *   appropriate.
  */
@@ -267,31 +271,40 @@ function eventbrite_save($op, $object) {
   switch ($op) {
     case 'event_new':
       return _eventbrite_api_event_new($object);
+
     case 'event_update':
       return _eventbrite_api_event_update($object);
+
     case 'organizer_new':
       return _eventbrite_api_organizer_new($object);
+
     case 'organizer_update':
       return _eventbrite_api_organizer_update($object);
+
     case 'payment_update':
       return _eventbrite_api_payment_update($object);
+
     case 'ticket_new':
       return _eventbrite_api_ticket_new($object);
+
     case 'ticket_update':
       return _eventbrite_api_ticket_update($object);
+
     case 'user_new':
       return _eventbrite_api_user_new($object);
+
     case 'venue_new':
       return _eventbrite_api_venue_new($object);
+
     case 'venue_update':
       return _eventbrite_api_venue_update($object);
   }
 }
 
-/*
+/**
  * Translates timezone offset into the formatting that Eventbrite API expects.
  *
- * @param $offset
+ * @param int $offset
  *   The timezone offset.
  */
 function eventbrite_timezone_offset($offset) {
@@ -303,19 +316,18 @@ function eventbrite_timezone_offset($offset) {
 }
 
 /**
- * Returns Eventbrite's API user_list_events as a keyed array suitable
- * for option lists.
+ * Returns Eventbrite's API user_list_events suitable for option lists.
  *
  * @param mixed $id
  *   The event ID for an event that must not be filtered.
- * @param boolean $allow_historical
+ * @param bool $allow_historical
  *   Whether or not events that start prior to the current time should
  *   be returned.
  *
  * @return array
  *   An array of event titles keyed by event ID.
  */
-function eventbrite_get_events_options($id = null, $allow_historical = false) {
+function eventbrite_get_events_options($id = NULL, $allow_historical = FALSE) {
   $options = array();
   if ($events = eventbrite_get('user_list_events')) {
     $options[0] = '';
@@ -334,9 +346,12 @@ function eventbrite_get_events_options($id = null, $allow_historical = false) {
   return $options;
 }
 
-/*
- * Returns TRUE if the Eventbrite module is set up with valid Eventbrite
- * authentication.
+/**
+ * Check if Eventbrite authentication is valid.
+ *
+ * @return bool
+ *   TRUE if the Eventbrite module is set up with valid Eventbrite
+ *   authentication.
  */
 function eventbrite_is_valid_auth() {
   return variable_get('eventbrite_is_valid_auth', FALSE);

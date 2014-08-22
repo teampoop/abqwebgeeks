@@ -311,7 +311,8 @@ function eventbrite_venue_list_form($form, $form_state, $user_key = '') {
   if (empty($user_key)) {
     $user_key = variable_get('eventbrite_user_key', '');
     if (empty($user_key)) {
-      return t('No Eventbrite user key has been configured for this account.');
+      drupal_set_message(t('No Eventbrite user key has been configured for this account.'));
+      return $form;
     }
   }
 
@@ -439,7 +440,7 @@ function eventbrite_venue_list_form_submit($form, &$form_state) {
 function eventbrite_venue_get_enabled() {
   // If Eventbrite OG is enabled and there is a group context
   // TODO: This filtering of venues by sub modules should really happen via a hook
-  if (module_exists('eventbrite_og') && $group_node = og_get_group_context()) {
+  if (module_exists('eventbrite_og') && $group_node = og_context()) {
     $filter_venues = eventbrite_og_get_enabled_venues($group_node);
   }
   else {

@@ -34,8 +34,9 @@ function eventbrite_admin_settings($form, &$form_state) {
     '#description' => t('Your user key for secure authentication. You can find it by <a href="http://www.eventbrite.com/userkeyapi" target="_blank">clicking here</a>'),
   );
 
-  // TODO: Think more about how min cache is being used with the Eventbrite API
-  // TODO: Provide better description min cache based on implementation
+  // @todo: Think more about how min cache is being used with the Eventbrite
+  // API.
+  // @todo: Provide better description min cache based on implementation.
   $form['eventbrite_cache_minimum'] = array(
     '#type' => 'textfield',
     '#title' => 'Minimum Cache Lifetime',
@@ -51,13 +52,13 @@ function eventbrite_admin_settings($form, &$form_state) {
     '#default_value' => variable_get('eventbrite_debug', 0),
   );
 
-  // Set the Authentication flag to valid on form submit
+  // Set the Authentication flag to valid on form submit.
   $form['eventbrite_is_valid_auth'] = array(
     '#type' => 'value',
     '#value' => TRUE,
   );
 
-  $form['#validate'][] =  'eventbrite_admin_settings_validate';
+  $form['#validate'][] = 'eventbrite_admin_settings_validate';
 
   return system_settings_form($form);
 }
@@ -84,39 +85,22 @@ function eventbrite_admin_settings_validate($form, &$form_state) {
   $eventbrite_app_key = $form_state['values']['eventbrite_app_key'];
   $eventbrite_user_key = $form_state['values']['eventbrite_user_key'];
 
-  // Application Key and User Key are both required for the form to validate
+  // Application Key and User Key are both required for the form to validate.
   if (empty($eventbrite_app_key) || empty($eventbrite_user_key)) {
-    // These form elements are set as #required, so exit without form_set_error()
+    // These form elements are set as #required, so exit without
+    // form_set_error().
     return FALSE;
   }
 
-  // Validate the keys
+  // Validate the keys.
   if (_eventbrite_admin_authenticate_keys($eventbrite_app_key, $eventbrite_user_key)) {
-    // Keys were successfully authenticated by the Eventbrite server
+    // Keys were successfully authenticated by the Eventbrite server.
     return TRUE;
   }
 
-  // Keys did not validate, display error messages to the admin
-  // TODO: Remove this error msg handling, as common_process_result will be removing calls to eventbrite_errors()
-  if ($errors = eventbrite_errors()) {
-    foreach ($errors as $error_type => $error_msg) {
-      switch ($error_type) {
-        case 'Application Key Error':
-          form_set_error('eventbrite_app_key', t($error_type) . ': ' . $error_msg);
-          break;
-        case 'Authentication Error':
-          form_set_error('eventbrite_user_key', t($error_type) . ': ' . $error_msg);
-          break;
-        default:
-          drupal_set_message($error_msg, 'error');
-          break;
-      }
-    }
-  }
-  else {
-    // Keys did not validate but no error was logged, this is the catch all
-    drupal_set_message(t('The keys you entered could not be validated by the Eventbrite server.  Please check the values.'), 'error');
-  }
+  // Keys did not validate but no error was logged. This is the catch all.
+  drupal_set_message(t('The keys you entered could not be validated by the Eventbrite server.  Please check the values.'), 'error');
+
   return FALSE;
 }
 
@@ -128,37 +112,39 @@ function eventbrite_admin_settings_validate($form, &$form_state) {
  * processing and takes in keys rather than using the module's variables to
  * authenticate.
  *
- * @param $app_key
+ * @param string $app_key
  *   The Eventbrite app key entered by the user.
- * @param $user_key
+ * @param string $user_key
  *   Ther Eventbrite user key entered by the user.
  *
- * @return
+ * @return object
  *   The user that was authenticated.
  */
 function _eventbrite_admin_authenticate_keys($app_key, $user_key) {
-  // Return false if any keys are empty
+  // Return false if any keys are empty.
   if (empty($app_key) || empty($user_key)) {
     return FALSE;
   }
 
-  // Build query string for user_get request
+  // Build query string for user_get request.
   $query_string = 'app_key=' . $app_key . '&user_key=' . $user_key;
 
-  // Send HTTP request to the server
+  // Send HTTP request to the server.
   if ($result = drupal_http_request(EVENTBRITE_SERVER . 'user_get?' . $query_string)) {
-    // Process the result if there was one, and return simplexml_load_string($result->data)
+    // Process the result if there was one, and return
+    // simplexml_load_string($result->data).
     if (_eventbrite_common_process_result($result)) {
-      // Successful API call
+      // Successful API call.
       $xml_object = $result->object;
 
-      // TODO: write a populate user function much like _eventbrite_api_populate_event()
+      // @todo: write a populate user function much like
+      // _eventbrite_api_populate_event().
       $eventbrite_user = new stdClass();
       foreach ($xml_object as $key => $value) {
         $eventbrite_user->$key = (string) $value;
       }
 
-      // Return authenticated user
+      // Return authenticated user.
       return $eventbrite_user;
     }
   }

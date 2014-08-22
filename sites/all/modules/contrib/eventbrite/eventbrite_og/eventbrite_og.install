@@ -34,7 +34,6 @@ function eventbrite_og_schema() {
       'default_payment_settings' => array(
         'type' => 'text',
         'not null' => TRUE,
-        'default' => '',
       ),
       'enabled_organizers' => array(
         'type' => 'varchar',

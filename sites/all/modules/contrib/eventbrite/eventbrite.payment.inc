@@ -27,9 +27,9 @@ function eventbrite_payment_default_settings($form, &$form_state) {
 /**
  * Builds the bulk of the payment settings form.
  *
- * @param $default_values
+ * @param array $default_values
  *   (optional) An array containing the fields of a locally-stored venue.
- * @param $show_controls
+ * @param int $show_controls
  *   (optional) Whether or not to show the first two checkboxes of the form.
  */
 function eventbrite_payment_settings_form($default_values = array(), $show_controls = 0) {
@@ -175,7 +175,8 @@ function eventbrite_payment_settings_form($default_values = array(), $show_contr
     ),
   );
 
-  // If show controls = FALSE & allow_payment_override = FALSE, add readonly to each element
+  // If show controls = FALSE & allow_payment_override = FALSE, add readonly to
+  // each element.
   if (!$show_controls && !$default_values['allow_payment_override']) {
 
     if ($form['eventbrite_accept_paypal']['#default_value']) {
@@ -238,19 +239,22 @@ function eventbrite_payment_default_settings_validate($form, &$form_state) {
   $form_values = $form_state['values'];
 
   if ($form_values['eventbrite_accept_paypal']) {
-    // If using PayPay check that paypal email is entered
+    // If using PayPay check that paypal email is entered.
     if (!valid_email_address($form_values['eventbrite_paypal_email'])) {
-      // TODO: Does this need to actually verified that there is a PayPal account registered to this user
+      // @todo: Does this need to actually verify that there is a PayPal
+      // account registered to this user?
       form_set_error('eventbrite_paypal_email', t('Please provide a valid Paypal email.'));
     }
   }
 
   if ($form_values['eventbrite_accept_google']) {
-    // If using Google Checkout check that Merchant ID is a 10 or 15 digit number
+    // If using Google Checkout check that Merchant ID is a 10 or 15 digit
+    // number.
     if (!preg_match('/^([0-9]{10}|[0-9]{15})$/', $form_values['eventbrite_google_merchant_id'])) {
       form_set_error('eventbrite_google_merchant_id', t('To use Google Checkout you need to enter a 10 or 15 digit Google Checkout Merchant ID.'));
     }
-    // If using Google Checkout check that Merchant Key is a 22 character string
+    // If using Google Checkout check that Merchant Key is a 22 character
+    // string.
     if (!preg_match('/^(.{22})$/', $form_values['eventbrite_google_merchant_key'])) {
       form_set_error('eventbrite_google_merchant_key', t('To use Google Checkout you need to enter a 22 character Google Checkout Merchant Key.'));
     }
@@ -273,10 +277,10 @@ function eventbrite_payment_default_settings_submit($form, &$form_state) {
  * resulting array is intended to be stored in the {variable} table as
  * eventbrite_default_payment_settings.
  *
- * @param $values
+ * @param array $values
  *   An array or object containing the payment settings.
  *
- * @return
+ * @return array
  *   An array of the payment settings with the "eventbrite_" prefix removed.
  */
 function eventbrite_payment_get_settings($values) {

@@ -16,10 +16,13 @@ files[] = eventbrite.organizer.inc
 files[] = eventbrite.payment.inc
 files[] = eventbrite.venue.inc
 files[] = eventbrite.css
+files[] = eventbrite.test
 
-; Information added by drupal.org packaging script on 2013-09-18
-version = "7.x-2.0-alpha2"
+stylesheets[all][] = eventbrite.css
+
+; Information added by Drupal.org packaging script on 2014-08-06
+version = "7.x-2.0-alpha3"
 core = "7.x"
 project = "eventbrite"
-datestamp = "1379529800"
+datestamp = "1407355128"
 
