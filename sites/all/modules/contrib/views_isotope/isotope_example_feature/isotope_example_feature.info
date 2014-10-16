@@ -1,0 +1,26 @@
+name = Isotope Example
+description = Sample Isotope Grid of articles filtered by tags
+core = 7.x
+package = Features
+php = 5.2.4
+dependencies[] = features
+dependencies[] = taxonomy
+dependencies[] = views
+dependencies[] = views_isotope
+features[ctools][] = views:views_default:3.0
+features[features_api][] = api:1
+features[field][] = node-article-body
+features[field][] = node-article-field_tags
+features[node][] = article
+features[taxonomy][] = isotope_sort_options
+features[taxonomy][] = tags
+features[views_view][] = isotope_example
+features[views_view][] = isotope_example_filter_block
+features[views_view][] = isotope_example_sort_block
+
+; Information added by Drupal.org packaging script on 2014-08-05
+version = "7.x-2.0-alpha1"
+core = "7.x"
+project = "views_isotope"
+datestamp = "1407277128"
+
