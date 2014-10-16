@@ -1,0 +1,61 @@
+<?php
+
+/**
+ * @file
+ * Install file for simple fb connect module. Checks Requirements.
+ */
+
+/**
+ * Implements hook_requirements().
+ */
+function simple_fb_connect_requirements($phase) {
+  $requirements = array();
+  $t = get_t();
+
+  if (!function_exists('curl_init')) {
+    $requirements['curl']['title'] = $t('cURL library');
+    $requirements['curl']['value'] = $t('Not installed');
+    $requirements['curl']['severity'] = REQUIREMENT_ERROR;
+    $requirements['curl']['description'] = $t('The cURL library is not installed. Please check the <a href="@url">PHP cURL documentation</a> for information on how to correct this.', array('@url' => 'http://www.php.net/manual/en/curl.setup.php'));
+  }
+
+  if (!function_exists('json_decode')) {
+    $requirements['json']['title'] = $t('JSON extension');
+    $requirements['json']['value'] = $t('Not installed');
+    $requirements['json']['severity'] = REQUIREMENT_ERROR;
+    $requirements['json']['description'] = $t('The JSON library is not installed. Facebook needs the JSON PHP extension');
+  }
+
+  if ($phase == 'runtime') {
+    drupal_load('module', 'simple_fb_connect');
+    simple_fb_connect_facebook_client_load_include();
+
+    $requirements['facebook-php-sdk']['title'] = $t('Facebook PHP sdk');
+    if (!class_exists('Facebook')) {
+      $requirements['facebook-php-sdk']['value'] = $t('Not installed');
+      $requirements['facebook-php-sdk']['severity'] = REQUIREMENT_ERROR;
+      $requirements['facebook-php-sdk']['description'] = $t('Fbconnect : Facebook PHP library not found. See README.txt');
+    }
+    elseif (!constant('Facebook::VERSION')) {
+      $requirements['facebook-php-sdk']['value'] = $t('Outdated version');
+      $requirements['facebook-php-sdk']['severity'] = REQUIREMENT_ERROR;
+      $requirements['facebook-php-sdk']['description'] = $t('Fbconnect : Installed Facebook PHP library is outdated. See README.txt');
+    }
+    else {
+      $requirements['facebook-php-sdk']['value'] = l(constant('Facebook::VERSION'), 'https://github.com/facebook/facebook-php-sdk', array('external' => TRUE));
+      $requirements['facebook-php-sdk']['severity'] = REQUIREMENT_OK;
+    }
+  }
+
+  return $requirements;
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function simple_fb_connect_uninstall() {
+  variable_del('simple_fb_connect_appid');
+  variable_del('simple_fb_connect_skey');
+  variable_del('simple_fb_connect_login_only');
+  variable_del('simple_fb_connect_post_login_url');
+}
