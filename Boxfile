@@ -4,6 +4,7 @@ web1: #component type & number
     - sites/default/files
   php_extensions:
     - mysqli
+    -curl
     - gd
     - hash
     - json
