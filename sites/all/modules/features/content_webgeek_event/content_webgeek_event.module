@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the content_webgeek_event feature.
+ */
+
+include_once 'content_webgeek_event.features.inc';
