@@ -35,15 +35,15 @@ function job_post_field_default_field_instances() {
           'quickedit' => array(
             'editor' => 'form',
           ),
-          'trim_length' => 600,
+          'trim_length' => 200,
         ),
-        'type' => 'text_summary_or_trimmed',
+        'type' => 'text_trimmed',
         'weight' => 0,
       ),
     ),
     'entity_type' => 'node',
     'field_name' => 'body',
-    'label' => 'Description',
+    'label' => 'Details',
     'required' => 0,
     'settings' => array(
       'display_summary' => 0,
@@ -58,7 +58,7 @@ function job_post_field_default_field_instances() {
         'summary_rows' => 5,
       ),
       'type' => 'text_textarea_with_summary',
-      'weight' => 6,
+      'weight' => 2,
     ),
   );
 
@@ -82,14 +82,19 @@ function job_post_field_default_field_instances() {
       ),
       'teaser' => array(
         'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
+        'module' => 'text',
+        'settings' => array(
+          'quickedit' => array(
+            'editor' => 'plain_text',
+          ),
+        ),
+        'type' => 'text_default',
+        'weight' => 1,
       ),
     ),
     'entity_type' => 'node',
     'field_name' => 'field_job_post_company',
-    'label' => 'Job Post Company',
+    'label' => 'Company',
     'required' => 1,
     'settings' => array(
       'text_processing' => 0,
@@ -115,25 +120,20 @@ function job_post_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'text',
-        'settings' => array(
-          'quickedit' => array(
-            'editor' => 'plain_text',
-          ),
-        ),
-        'type' => 'text_default',
+        'settings' => array(),
+        'type' => 'hidden',
         'weight' => 5,
       ),
       'teaser' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 2,
       ),
     ),
     'entity_type' => 'node',
     'field_name' => 'field_job_post_rate',
-    'label' => 'job post rate',
+    'label' => 'Pay',
     'required' => 0,
     'settings' => array(
       'text_processing' => 0,
@@ -146,7 +146,7 @@ function job_post_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 5,
+      'weight' => 3,
     ),
   );
 
@@ -177,12 +177,12 @@ function job_post_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 4,
       ),
     ),
     'entity_type' => 'node',
     'field_name' => 'field_job_post_remove',
-    'label' => 'job post remove',
+    'label' => 'Post Remove',
     'required' => 0,
     'settings' => array(
       'default_value' => 'now',
@@ -204,7 +204,7 @@ function job_post_field_default_field_instances() {
         'year_range' => '-3:+3',
       ),
       'type' => 'date_popup',
-      'weight' => 3,
+      'weight' => 7,
     ),
   );
 
@@ -212,35 +212,24 @@ function job_post_field_default_field_instances() {
   $field_instances['node-job_post-field_job_post_starts'] = array(
     'bundle' => 'job_post',
     'deleted' => 0,
-    'description' => '',
+    'description' => 'This is the date you want the post to start.',
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'date',
-        'settings' => array(
-          'format_type' => 'long',
-          'fromto' => 'both',
-          'multiple_from' => '',
-          'multiple_number' => '',
-          'multiple_to' => '',
-          'quickedit' => array(
-            'editor' => 'form',
-          ),
-          'show_repeat_rule' => 'show',
-        ),
-        'type' => 'date_default',
+        'settings' => array(),
+        'type' => 'hidden',
         'weight' => 4,
       ),
       'teaser' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 3,
       ),
     ),
     'entity_type' => 'node',
     'field_name' => 'field_job_post_starts',
-    'label' => 'job post starts',
+    'label' => 'Post Start',
     'required' => 0,
     'settings' => array(
       'default_value' => 'now',
@@ -262,7 +251,7 @@ function job_post_field_default_field_instances() {
         'year_range' => '-3:+3',
       ),
       'type' => 'date_popup',
-      'weight' => 4,
+      'weight' => 6,
     ),
   );
 
@@ -288,12 +277,12 @@ function job_post_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 5,
       ),
     ),
     'entity_type' => 'node',
     'field_name' => 'field_job_post_type',
-    'label' => 'job post type',
+    'label' => 'Type',
     'required' => 1,
     'settings' => array(
       'user_register_form' => FALSE,
@@ -303,20 +292,66 @@ function job_post_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 2,
+      'weight' => 4,
+    ),
+  );
+
+  // Exported field_instance: 'node-job_post-field_tags'
+  $field_instances['node-job_post-field_tags'] = array(
+    'bundle' => 'job_post',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'taxonomy',
+        'settings' => array(
+          'quickedit' => array(
+            'editor' => 'form',
+          ),
+        ),
+        'type' => 'taxonomy_term_reference_link',
+        'weight' => 6,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_tags',
+    'label' => 'Tags',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'taxonomy',
+      'settings' => array(
+        'autocomplete_path' => 'taxonomy/autocomplete',
+        'size' => 60,
+      ),
+      'type' => 'taxonomy_autocomplete',
+      'weight' => 5,
     ),
   );
 
   // Translatables
   // Included for use with string extractors like potx.
+  t('Company');
   t('Date to remove post from site.');
-  t('Description');
-  t('Job Post Company');
+  t('Details');
+  t('Pay');
+  t('Post Remove');
+  t('Post Start');
+  t('Tags');
+  t('This is the date you want the post to start.');
+  t('Type');
   t('cash is king.');
-  t('job post rate');
-  t('job post remove');
-  t('job post starts');
-  t('job post type');
 
   return $field_instances;
 }

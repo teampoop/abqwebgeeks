@@ -58,6 +58,21 @@ function job_post_views_default_views() {
   $handler->display->display_options['filters']['type']['value'] = array(
     'job_post' => 'job_post',
   );
+  $handler->display->display_options['filters']['type']['group'] = 1;
+  /* Filter criterion: Content: Post Start (field_job_post_starts) */
+  $handler->display->display_options['filters']['field_job_post_starts_value']['id'] = 'field_job_post_starts_value';
+  $handler->display->display_options['filters']['field_job_post_starts_value']['table'] = 'field_data_field_job_post_starts';
+  $handler->display->display_options['filters']['field_job_post_starts_value']['field'] = 'field_job_post_starts_value';
+  $handler->display->display_options['filters']['field_job_post_starts_value']['operator'] = '>=';
+  $handler->display->display_options['filters']['field_job_post_starts_value']['group'] = 1;
+  $handler->display->display_options['filters']['field_job_post_starts_value']['default_date'] = 'now';
+  /* Filter criterion: Content: Post Remove (field_job_post_remove) */
+  $handler->display->display_options['filters']['field_job_post_remove_value']['id'] = 'field_job_post_remove_value';
+  $handler->display->display_options['filters']['field_job_post_remove_value']['table'] = 'field_data_field_job_post_remove';
+  $handler->display->display_options['filters']['field_job_post_remove_value']['field'] = 'field_job_post_remove_value';
+  $handler->display->display_options['filters']['field_job_post_remove_value']['operator'] = '<=';
+  $handler->display->display_options['filters']['field_job_post_remove_value']['group'] = 1;
+  $handler->display->display_options['filters']['field_job_post_remove_value']['default_date'] = 'now';
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page');
