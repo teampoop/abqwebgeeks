@@ -119,6 +119,7 @@ function simple_fb_connect_login() {
             }
           }
 
+          drupal_alter("simple_fb_connect_register", $fields, $fb_user_profile);
 
           //the first parameter is left blank so a new user is created
           $account = user_save('', $fields);

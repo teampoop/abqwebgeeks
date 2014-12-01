@@ -29,15 +29,15 @@ function simple_fb_connect_api_keys_settings($form, &$form_state) {
     '#description' => t('Copy this value into Facebook Applications on Connect settings tab'),
     '#default_value' => $GLOBALS['base_url'],
   );
-  
-   $form['simple_fb_connect_login_only'] = array(
+
+  $form['simple_fb_connect_login_only'] = array(
     '#type' => 'checkbox',
     '#title' => t('Login Only (No Registration)'),
     '#description' => t('Allow only existing users to login with FB. New users can not signup using FB Connect.'),
     '#default_value' => variable_get('simple_fb_connect_login_only', 0),
   );
-   
-   $form['simple_fb_connect_post_login_url'] = array(
+ 
+  $form['simple_fb_connect_post_login_url'] = array(
     '#type' => 'textfield',
     '#title' => t('Post Login url'),
     '#description' => t('Drupal URL to which the user should be redirected to after successful login.'),

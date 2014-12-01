@@ -4,9 +4,9 @@ package = Facebook
 core = 7.x
 dependencies[] = libraries
 configure = admin/config/people/simple-fb-connect
-; Information added by Drupal.org packaging script on 2014-07-05
-version = "7.x-1.14"
+; Information added by Drupal.org packaging script on 2014-11-10
+version = "7.x-1.15"
 core = "7.x"
 project = "simple_fb_connect"
-datestamp = "1404586729"
+datestamp = "1415591281"
 

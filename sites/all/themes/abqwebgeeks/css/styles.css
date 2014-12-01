@@ -86,3 +86,7 @@ a {
   right: 0;
   padding-right: 5px;
 }
+
+ul {
+    margin: 0;
+}

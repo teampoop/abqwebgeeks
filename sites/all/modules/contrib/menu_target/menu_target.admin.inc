@@ -37,11 +37,18 @@ function menu_target_edit_form_extra_elements(&$form, $node_form) {
     // Get the currently stored menu options array.
     $options = $node_form ? $form['menu']['link']['options']['#value'] : $form['options']['#value'];
 
+    $default = 0;
+    if (isset($options['attributes']) && isset($options['attributes'][$attribute])) {
+      if (in_array($attribute_value, $options['attributes'][$attribute])) {
+        $default = 1;
+      }
+    }
+
     // Create the form array.
     $target = array(
       '#type' => ($attribute == 'html' ? 'select' : 'checkbox'),
       '#title' => t('Open this link in a new window'),
-      '#default_value' => (isset($options['attributes']) && isset($options['attributes'][$attribute]) && in_array($attribute_value, $options['attributes'])),
+      '#default_value' => $default
     );
 
     // Depanding on the form type, this element is placed in the
@@ -89,27 +96,20 @@ function _menu_target_edit_form_extra_elements_submit($form, &$form_state) {
 
   // If the user has checked the 'open in new window' checkbox,
   // we'll add the right attribute and it's value to the menu's options array.
-  if ($values['target'] == 0) {
+  if ($values['target'] != 0) {
     if (!isset($values['options']['attributes'])) {
       $values['options']['attributes'] = array($attribute => array($attribute_value));
     }
     elseif (!isset($values['options']['attributes'][$attribute])) {
       $values['options']['attributes'][$attribute] = array($attribute_value);
     }
-    elseif (!in_array($attribute_value, $values['options']['attributes'])) {
+    elseif (!in_array($attribute_value, $values['options']['attributes'][$attribute])) {
       $values['options']['attributes'][$attribute] = $attribute_value;
     }
   }
   else {
     // Clean up the attributes class array.
-    if (isset($values['options']['attributes'])
-      && isset($values['options']['attributes'])
-      && in_array($attribute_value, $values['options']['attributes'])) {
-      unset($values['options']['attributes'][array_search($attribute_value, $values['options']['attributes'])]);
-      if (empty($values['options']['attributes'][$attribute])) {
-        unset($values['options']['attributes'][$attribute]);
-      }
-    }
+    unset($values['options']['attributes'][$attribute]);
   }
 }
 
