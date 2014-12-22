@@ -1,0 +1,8 @@
+name = Get Involved Menu
+core = 7.x
+package = ABQ Webgeeks
+dependencies[] = features
+dependencies[] = menu
+features[features_api][] = api:2
+features[menu_custom][] = menu-get-involved
+project path = sites/all/modules/features
