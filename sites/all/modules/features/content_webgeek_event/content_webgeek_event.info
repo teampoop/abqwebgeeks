@@ -1,6 +1,6 @@
-name = content_webgeek_event
+name = Webgeek Event
 core = 7.x
-package = Features
+package = ABQ Webgeeks
 dependencies[] = date
 dependencies[] = features
 dependencies[] = link
@@ -19,4 +19,5 @@ features[field_instance][] = node-webgeek_event-field_eventbright_url
 features[field_instance][] = node-webgeek_event-field_tags
 features[node][] = webgeek_event
 features[taxonomy][] = tags
+mtime = 1419220609
 project path = sites/all/modules/features
