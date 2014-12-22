@@ -29,9 +29,15 @@ function job_post_views_default_views() {
   $handler->display->display_options['query']['type'] = 'views_query';
   $handler->display->display_options['exposed_form']['type'] = 'basic';
   $handler->display->display_options['pager']['type'] = 'full';
-  $handler->display->display_options['pager']['options']['items_per_page'] = '10';
-  $handler->display->display_options['style_plugin'] = 'isotope';
+  $handler->display->display_options['pager']['options']['items_per_page'] = '100';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
+  $handler->display->display_options['pager']['options']['id'] = '0';
+  $handler->display->display_options['pager']['options']['quantity'] = '9';
+  $handler->display->display_options['style_plugin'] = 'default';
+  $handler->display->display_options['style_options']['default_row_class'] = FALSE;
+  $handler->display->display_options['style_options']['row_class_special'] = FALSE;
   $handler->display->display_options['row_plugin'] = 'node';
+  $handler->display->display_options['row_options']['links'] = FALSE;
   /* Field: Content: Title */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
@@ -39,6 +45,28 @@ function job_post_views_default_views() {
   $handler->display->display_options['fields']['title']['label'] = '';
   $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
   $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
+  /* Field: Content: Body */
+  $handler->display->display_options['fields']['body']['id'] = 'body';
+  $handler->display->display_options['fields']['body']['table'] = 'field_data_body';
+  $handler->display->display_options['fields']['body']['field'] = 'body';
+  $handler->display->display_options['fields']['body']['label'] = 'Description';
+  $handler->display->display_options['fields']['body']['type'] = 'text_summary_or_trimmed';
+  $handler->display->display_options['fields']['body']['settings'] = array(
+    'trim_length' => '400',
+  );
+  /* Field: Content: Who */
+  $handler->display->display_options['fields']['field_job_post_company']['id'] = 'field_job_post_company';
+  $handler->display->display_options['fields']['field_job_post_company']['table'] = 'field_data_field_job_post_company';
+  $handler->display->display_options['fields']['field_job_post_company']['field'] = 'field_job_post_company';
+  $handler->display->display_options['fields']['field_job_post_company']['type'] = 'text_plain';
+  /* Field: Content: How Much */
+  $handler->display->display_options['fields']['field_job_post_rate']['id'] = 'field_job_post_rate';
+  $handler->display->display_options['fields']['field_job_post_rate']['table'] = 'field_data_field_job_post_rate';
+  $handler->display->display_options['fields']['field_job_post_rate']['field'] = 'field_job_post_rate';
+  /* Field: Content: What */
+  $handler->display->display_options['fields']['field_job_post_type']['id'] = 'field_job_post_type';
+  $handler->display->display_options['fields']['field_job_post_type']['table'] = 'field_data_field_job_post_type';
+  $handler->display->display_options['fields']['field_job_post_type']['field'] = 'field_job_post_type';
   /* Sort criterion: Content: Post date */
   $handler->display->display_options['sorts']['created']['id'] = 'created';
   $handler->display->display_options['sorts']['created']['table'] = 'node';
@@ -59,7 +87,7 @@ function job_post_views_default_views() {
     'job_post' => 'job_post',
   );
   $handler->display->display_options['filters']['type']['group'] = 1;
-  /* Filter criterion: Content: Post Start (field_job_post_starts) */
+  /* Filter criterion: Content: Posted (field_job_post_starts) */
   $handler->display->display_options['filters']['field_job_post_starts_value']['id'] = 'field_job_post_starts_value';
   $handler->display->display_options['filters']['field_job_post_starts_value']['table'] = 'field_data_field_job_post_starts';
   $handler->display->display_options['filters']['field_job_post_starts_value']['field'] = 'field_job_post_starts_value';
@@ -99,6 +127,10 @@ function job_post_views_default_views() {
     t('‹ previous'),
     t('next ›'),
     t('last »'),
+    t('Description'),
+    t('Who'),
+    t('How Much'),
+    t('What'),
     t('Page'),
   );
   $export['job_posts'] = $view;

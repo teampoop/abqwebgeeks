@@ -29,21 +29,26 @@ function job_post_field_default_field_instances() {
         'weight' => 0,
       ),
       'teaser' => array(
-        'label' => 'hidden',
-        'module' => 'text',
+        'label' => 'inline',
+        'module' => 'smart_trim',
         'settings' => array(
-          'quickedit' => array(
-            'editor' => 'form',
-          ),
+          'more_link' => 1,
+          'more_text' => 'Read more',
+          'summary_handler' => 'ignore',
           'trim_length' => 200,
+          'trim_options' => array(
+            'text' => 'text',
+          ),
+          'trim_suffix' => '...',
+          'trim_type' => 'chars',
         ),
-        'type' => 'text_trimmed',
-        'weight' => 0,
+        'type' => 'smart_trim_format',
+        'weight' => 4,
       ),
     ),
     'entity_type' => 'node',
     'field_name' => 'body',
-    'label' => 'Details',
+    'label' => 'What',
     'required' => 0,
     'settings' => array(
       'display_summary' => 0,
@@ -81,20 +86,16 @@ function job_post_field_default_field_instances() {
         'weight' => 1,
       ),
       'teaser' => array(
-        'label' => 'above',
+        'label' => 'inline',
         'module' => 'text',
-        'settings' => array(
-          'quickedit' => array(
-            'editor' => 'plain_text',
-          ),
-        ),
+        'settings' => array(),
         'type' => 'text_default',
-        'weight' => 1,
+        'weight' => 0,
       ),
     ),
     'entity_type' => 'node',
     'field_name' => 'field_job_post_company',
-    'label' => 'Company',
+    'label' => 'Who',
     'required' => 1,
     'settings' => array(
       'text_processing' => 0,
@@ -125,15 +126,16 @@ function job_post_field_default_field_instances() {
         'weight' => 5,
       ),
       'teaser' => array(
-        'label' => 'above',
+        'label' => 'inline',
+        'module' => 'text',
         'settings' => array(),
-        'type' => 'hidden',
+        'type' => 'text_default',
         'weight' => 2,
       ),
     ),
     'entity_type' => 'node',
     'field_name' => 'field_job_post_rate',
-    'label' => 'Pay',
+    'label' => 'How Much',
     'required' => 0,
     'settings' => array(
       'text_processing' => 0,
@@ -177,7 +179,7 @@ function job_post_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 4,
+        'weight' => 6,
       ),
     ),
     'entity_type' => 'node',
@@ -221,15 +223,23 @@ function job_post_field_default_field_instances() {
         'weight' => 4,
       ),
       'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
+        'label' => 'inline',
+        'module' => 'date',
+        'settings' => array(
+          'format_type' => 'long',
+          'fromto' => 'both',
+          'multiple_from' => '',
+          'multiple_number' => '',
+          'multiple_to' => '',
+          'show_repeat_rule' => 'show',
+        ),
+        'type' => 'date_default',
         'weight' => 3,
       ),
     ),
     'entity_type' => 'node',
     'field_name' => 'field_job_post_starts',
-    'label' => 'Post Start',
+    'label' => 'Posted',
     'required' => 0,
     'settings' => array(
       'default_value' => 'now',
@@ -274,15 +284,16 @@ function job_post_field_default_field_instances() {
         'weight' => 2,
       ),
       'teaser' => array(
-        'label' => 'above',
+        'label' => 'inline',
+        'module' => 'list',
         'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 5,
+        'type' => 'list_default',
+        'weight' => 1,
       ),
     ),
     'entity_type' => 'node',
     'field_name' => 'field_job_post_type',
-    'label' => 'Type',
+    'label' => 'What',
     'required' => 1,
     'settings' => array(
       'user_register_form' => FALSE,
@@ -318,7 +329,7 @@ function job_post_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 5,
       ),
     ),
     'entity_type' => 'node',
@@ -342,15 +353,14 @@ function job_post_field_default_field_instances() {
 
   // Translatables
   // Included for use with string extractors like potx.
-  t('Company');
   t('Date to remove post from site.');
-  t('Details');
-  t('Pay');
+  t('How Much');
   t('Post Remove');
-  t('Post Start');
+  t('Posted');
   t('Tags');
   t('This is the date you want the post to start.');
-  t('Type');
+  t('What');
+  t('Who');
   t('cash is king.');
 
   return $field_instances;
