@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Local Event feature.
+ */
+
+include_once 'local_event.features.inc';

@@ -1,0 +1,14 @@
+name = Local Event
+core = 7.x
+package = ABQ Webgeeks
+dependencies[] = content_webgeek_event
+dependencies[] = date
+dependencies[] = features
+dependencies[] = taxonomy
+dependencies[] = text
+features[features_api][] = api:2
+features[field_instance][] = node-local_event-body
+features[field_instance][] = node-local_event-field_date_and_time
+features[field_instance][] = node-local_event-field_tags
+features[node][] = local_event
+project path = sites/all/modules/features
