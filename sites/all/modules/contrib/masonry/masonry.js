@@ -12,7 +12,7 @@ Drupal.behaviors.masonry = {
     $.each(Drupal.settings.masonry, function (container, settings) {
       // Set container
       var $container = $(container);
-
+      console.debug(settings);
       // Set options
       var $options = new Object();
       if (settings.item_selector) {
@@ -42,15 +42,8 @@ Drupal.behaviors.masonry = {
       $options.isFitWidth = settings.fit_width;
       $options.isRTL = settings.rtl;
 
-      // Apply Masonry to container
-      if (settings.images_first) {
-        $container.imagesLoaded(function () {
-          $container.masonry($options);
-        });
-      }
-      else {
-        $container.masonry($options);
-      }
+      $container.masonry($options);
+      console.debug($container.data('masonry'));
     });
 
   }
