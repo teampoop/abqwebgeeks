@@ -1,0 +1,25 @@
+uuid: bd72144d-96c4-4449-b0e1-78624aefdf8f
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'block_content:basic:3c139f12-4aad-4806-9d18-669213ce90d6'
+  module:
+    - block_content
+  theme:
+    - abqwebgeeks
+id: submitapresentationblock
+theme: abqwebgeeks
+region: sidebar_first
+weight: 0
+provider: null
+plugin: 'block_content:3c139f12-4aad-4806-9d18-669213ce90d6'
+settings:
+  id: 'block_content:3c139f12-4aad-4806-9d18-669213ce90d6'
+  label: 'Submit a Presentation Block'
+  provider: block_content
+  label_display: visible
+  status: true
+  info: ''
+  view_mode: full
+visibility: {  }
