@@ -1,0 +1,47 @@
+uuid: 257de71a-944e-41ec-9583-5cf1a6ff3308
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.webgeek_event.body
+    - field.field.node.webgeek_event.comment_node_webgeek_event
+    - field.field.node.webgeek_event.field_date_and_time
+    - field.field.node.webgeek_event.field_eventbright_id
+    - field.field.node.webgeek_event.field_eventbright_url
+    - field.field.node.webgeek_event.field_tags
+    - node.type.webgeek_event
+  module:
+    - datetime
+    - text
+    - user
+id: node.webgeek_event.teaser
+targetEntityType: node
+bundle: webgeek_event
+mode: teaser
+content:
+  body:
+    label: hidden
+    weight: 1
+    type: text_summary_or_trimmed
+    settings:
+      trim_length: 600
+    third_party_settings: {  }
+    region: content
+  field_date_and_time:
+    label: hidden
+    weight: 0
+    type: datetime_default
+    settings:
+      format_type: medium
+      timezone_override: ''
+    third_party_settings: {  }
+    region: content
+  links:
+    weight: 100
+    region: content
+hidden:
+  comment_node_webgeek_event: true
+  field_eventbright_id: true
+  field_eventbright_url: true
+  field_tags: true

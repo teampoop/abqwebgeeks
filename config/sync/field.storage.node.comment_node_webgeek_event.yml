@@ -1,0 +1,20 @@
+uuid: bad134b3-1f1e-4390-bb89-df2d35a88aae
+langcode: en
+status: true
+dependencies:
+  module:
+    - comment
+    - node
+id: node.comment_node_webgeek_event
+field_name: comment_node_webgeek_event
+entity_type: node
+type: comment
+settings:
+  comment_type: comment_node_webgeek_event
+module: comment
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

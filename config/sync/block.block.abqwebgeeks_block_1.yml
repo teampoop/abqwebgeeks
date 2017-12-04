@@ -1,0 +1,25 @@
+uuid: 92b70592-901d-4582-898e-97a3c483b08e
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'block_content:basic:3c139f12-4aad-4806-9d18-669213ce90d6'
+  module:
+    - block_content
+  theme:
+    - bartik
+id: abqwebgeeks_block_1
+theme: bartik
+region: sidebar_first
+weight: -15
+provider: null
+plugin: 'block_content:3c139f12-4aad-4806-9d18-669213ce90d6'
+settings:
+  id: 'block_content:3c139f12-4aad-4806-9d18-669213ce90d6'
+  label: 'Sign up!'
+  provider: block_content
+  label_display: visible
+  status: true
+  info: ''
+  view_mode: full
+visibility: {  }

@@ -1,0 +1,34 @@
+uuid: c7500206-f0b1-464a-91ef-262dcbd872af
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.local_event.body
+    - field.field.node.local_event.comment_node_local_event
+    - field.field.node.local_event.field_date_and_time
+    - field.field.node.local_event.field_tags
+    - node.type.local_event
+  module:
+    - text
+    - user
+id: node.local_event.teaser
+targetEntityType: node
+bundle: local_event
+mode: teaser
+content:
+  body:
+    label: hidden
+    weight: 0
+    type: text_summary_or_trimmed
+    settings:
+      trim_length: 600
+    third_party_settings: {  }
+    region: content
+  links:
+    weight: 100
+    region: content
+hidden:
+  comment_node_local_event: true
+  field_date_and_time: true
+  field_tags: true

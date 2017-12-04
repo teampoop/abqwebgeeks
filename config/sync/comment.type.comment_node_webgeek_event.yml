@@ -1,0 +1,8 @@
+uuid: 107ace87-08f9-46ad-94c9-1415a1357f33
+langcode: en
+status: true
+dependencies: {  }
+id: comment_node_webgeek_event
+label: 'Webgeek Event comment'
+target_entity_type_id: node
+description: null

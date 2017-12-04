@@ -1,0 +1,8 @@
+uuid: 99d8b8c5-9c4a-44d9-93cc-c0b1e88a3781
+langcode: en
+status: true
+dependencies: {  }
+id: comment_node_sponsors
+label: 'Sponsors comment'
+target_entity_type_id: node
+description: null

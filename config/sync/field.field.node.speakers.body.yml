@@ -1,0 +1,22 @@
+uuid: 84ab3489-d9ef-49ed-aebc-78158354532b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.body
+    - node.type.speakers
+  module:
+    - text
+id: node.speakers.body
+field_name: body
+entity_type: node
+bundle: speakers
+label: Blurb
+description: 'Short paragraph about the speaker. Only use filtered HTML please.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  display_summary: false
+field_type: text_with_summary

@@ -1,0 +1,54 @@
+uuid: e6b1407a-b553-47e8-adc5-dac0308ae045
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_display.comment.comment_node_sponsors.default
+    - field.field.node.sponsors.comment_node_sponsors
+    - field.field.node.sponsors.field_sponsor_image
+    - field.field.node.sponsors.field_sponsor_link
+    - node.type.sponsors
+  module:
+    - comment
+    - image
+    - link
+    - user
+id: node.sponsors.default
+targetEntityType: node
+bundle: sponsors
+mode: default
+content:
+  comment_node_sponsors:
+    label: hidden
+    type: comment_default
+    weight: 20
+    settings:
+      view_mode: default
+      pager_id: 0
+    third_party_settings: {  }
+    region: content
+  field_sponsor_image:
+    label: above
+    weight: 1
+    type: image
+    settings:
+      image_style: ''
+      image_link: ''
+    third_party_settings: {  }
+    region: content
+  field_sponsor_link:
+    label: above
+    weight: 2
+    type: link
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    region: content
+  links:
+    weight: 100
+    region: content
+hidden: {  }

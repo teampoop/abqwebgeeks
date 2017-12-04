@@ -1,0 +1,36 @@
+uuid: 1368e3e1-363f-48a7-9526-dfd0cf8738db
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.speakers.body
+    - field.field.node.speakers.comment_node_speakers
+    - field.field.node.speakers.field_image_headshot
+    - field.field.node.speakers.field_speaker_company
+    - field.field.node.speakers.field_speaker_twitter
+    - node.type.speakers
+  module:
+    - text
+    - user
+id: node.speakers.teaser
+targetEntityType: node
+bundle: speakers
+mode: teaser
+content:
+  body:
+    label: hidden
+    weight: 0
+    type: text_summary_or_trimmed
+    settings:
+      trim_length: 600
+    third_party_settings: {  }
+    region: content
+  links:
+    weight: 100
+    region: content
+hidden:
+  comment_node_speakers: true
+  field_image_headshot: true
+  field_speaker_company: true
+  field_speaker_twitter: true

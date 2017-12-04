@@ -1,0 +1,25 @@
+uuid: e49e37fa-2c76-4231-9a5d-6caf58e08940
+langcode: en
+status: true
+dependencies:
+  config:
+    - comment.type.comment_node_speakers
+    - field.field.comment.comment_node_speakers.comment_body
+  module:
+    - text
+id: comment.comment_node_speakers.default
+targetEntityType: comment
+bundle: comment_node_speakers
+mode: default
+content:
+  comment_body:
+    label: hidden
+    weight: 0
+    type: text_default
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  links:
+    weight: 100
+    region: content
+hidden: {  }

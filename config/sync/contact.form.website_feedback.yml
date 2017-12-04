@@ -1,0 +1,12 @@
+uuid: 3f8782fe-6358-41f7-8de0-85ca39765f64
+langcode: en
+status: true
+dependencies: {  }
+id: website_feedback
+label: 'Website feedback'
+recipients:
+  - contact@abqwebgeeks.org
+reply: ''
+weight: 0
+message: null
+redirect: null

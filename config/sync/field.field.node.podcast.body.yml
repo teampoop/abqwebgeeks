@@ -1,0 +1,22 @@
+uuid: 737f277e-f7b4-484b-b702-9c794fddd38a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.body
+    - node.type.podcast
+  module:
+    - text
+id: node.podcast.body
+field_name: body
+entity_type: node
+bundle: podcast
+label: Body
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  display_summary: true
+field_type: text_with_summary

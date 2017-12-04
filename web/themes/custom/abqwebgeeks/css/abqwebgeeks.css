@@ -1,0 +1,14 @@
+@import url(normalize.css/normalize.css);
+* {
+  box-sizing: border-box; }
+
+body {
+  background-color: #34DDDD; }
+
+a {
+  color: #A61414; }
+  a:hover {
+    color: #e42222; }
+
+.main-container {
+  background-color: #fff; }

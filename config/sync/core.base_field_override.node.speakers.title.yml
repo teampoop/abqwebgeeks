@@ -1,0 +1,18 @@
+uuid: 10501568-a21b-4547-97b8-23a881d66495
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.speakers
+id: node.speakers.title
+field_name: title
+entity_type: node
+bundle: speakers
+label: Name
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -1,0 +1,26 @@
+uuid: 1dd0d63d-a46d-4c13-b677-29fdbe728880
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_eventbright_url
+    - node.type.webgeek_event
+  module:
+    - link
+id: node.webgeek_event.field_eventbright_url
+field_name: field_eventbright_url
+entity_type: node
+bundle: webgeek_event
+label: 'Eventbright URL'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    title: 'Sign up on EventBrite'
+    url: 'http://abqwebgeeks.eventbrite.com'
+default_value_callback: ''
+settings:
+  title: 1
+  link_type: 17
+field_type: link

@@ -1,0 +1,8 @@
+uuid: 4e1e43c1-aa67-49a1-8374-48184602f301
+langcode: en
+status: true
+dependencies: {  }
+id: comment_node_speakers
+label: 'Speakers comment'
+target_entity_type_id: node
+description: null

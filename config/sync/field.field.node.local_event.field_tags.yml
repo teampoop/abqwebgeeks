@@ -1,0 +1,21 @@
+uuid: 449c970e-889a-4712-8b21-b77452c3831a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_tags
+    - node.type.local_event
+id: node.local_event.field_tags
+field_name: field_tags
+entity_type: node
+bundle: local_event
+label: Tags
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings: {  }
+field_type: entity_reference

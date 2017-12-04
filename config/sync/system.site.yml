@@ -1,0 +1,14 @@
+uuid: 5d9e2ab8-4cc9-49e9-9eb9-331dedf34630
+name: 'ABQ Webgeeks'
+mail: contact@abqwebgeeks.org
+slogan: 'Presenting the best in Albuquerque Web Technology.'
+page:
+  403: /
+  404: /
+  front: /node
+admin_compact_mode: false
+weight_select_max: 100
+langcode: en
+default_langcode: en
+_core:
+  default_config_hash: AyT9s8OUcclfALRE_imByOMgtZ19eOlqdF6zI3p7yqo

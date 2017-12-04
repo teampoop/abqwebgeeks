@@ -1,0 +1,34 @@
+uuid: 957dcf79-20d4-441f-b8be-d89aba1a5d05
+langcode: en
+status: true
+dependencies:
+  config:
+    - comment.type.comment_node_sponsors
+    - field.field.comment.comment_node_sponsors.comment_body
+  module:
+    - text
+id: comment.comment_node_sponsors.default
+targetEntityType: comment
+bundle: comment_node_sponsors
+mode: default
+content:
+  author:
+    weight: -2
+    region: content
+  comment_body:
+    weight: 0
+    type: text_textarea
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    region: content
+  subject:
+    type: string_textfield
+    weight: 10
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    region: content
+hidden: {  }

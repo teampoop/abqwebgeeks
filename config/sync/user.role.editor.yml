@@ -1,0 +1,29 @@
+uuid: f8ce386b-7da6-4c82-8868-7412bc8a2586
+langcode: en
+status: true
+dependencies: {  }
+id: editor
+label: Editor
+weight: 3
+is_admin: null
+permissions:
+  - 'access administration menu'
+  - 'access administration pages'
+  - 'access comments'
+  - 'access content'
+  - 'access user profiles'
+  - 'create article content'
+  - 'create local_event content'
+  - 'delete own article content'
+  - 'delete own local_event content'
+  - 'edit own article content'
+  - 'edit own comments'
+  - 'edit own local_event content'
+  - 'post comments'
+  - 'search content'
+  - 'skip comment approval'
+  - 'use advanced search'
+  - 'use text format filtered_html'
+  - 'use text format full_html'
+  - 'view files'
+  - 'view own unpublished content'

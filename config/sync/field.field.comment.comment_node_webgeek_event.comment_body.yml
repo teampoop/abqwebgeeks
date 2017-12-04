@@ -1,0 +1,21 @@
+uuid: 89dd1054-c4ab-4875-bff7-a599ff68176a
+langcode: en
+status: true
+dependencies:
+  config:
+    - comment.type.comment_node_webgeek_event
+    - field.storage.comment.comment_body
+  module:
+    - text
+id: comment.comment_node_webgeek_event.comment_body
+field_name: comment_body
+entity_type: comment
+bundle: comment_node_webgeek_event
+label: Comment
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

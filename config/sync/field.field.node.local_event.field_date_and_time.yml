@@ -1,0 +1,19 @@
+uuid: 7033a20b-1830-488e-a2ba-98d3c4f4413e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_date_and_time
+    - node.type.local_event
+id: node.local_event.field_date_and_time
+field_name: field_date_and_time
+entity_type: node
+bundle: local_event
+label: 'Date and Time'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: timestamp

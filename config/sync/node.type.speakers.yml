@@ -1,0 +1,18 @@
+uuid: 0391f546-51e0-4498-9b14-349799844fb2
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus:
+      - main-menu
+    parent: 'main-menu:0:'
+name: Speakers
+type: speakers
+description: 'Bios for Speakers. To be attached to Webgeeks Event content type'
+help: ''
+new_revision: false
+preview_mode: 1
+display_submitted: true

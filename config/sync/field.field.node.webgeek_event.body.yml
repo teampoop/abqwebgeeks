@@ -1,0 +1,22 @@
+uuid: 1f50af02-47c1-4953-b4d2-6ee448e773dc
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.body
+    - node.type.webgeek_event
+  module:
+    - text
+id: node.webgeek_event.body
+field_name: body
+entity_type: node
+bundle: webgeek_event
+label: Body
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  display_summary: true
+field_type: text_with_summary

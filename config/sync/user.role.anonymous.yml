@@ -1,0 +1,16 @@
+uuid: a28fdbe2-551b-46ec-9d1f-8649f2e2dcee
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: j5zLMOdJBqC0bMvSdth5UebkprJB8g_2FXHqhfpJzow
+id: anonymous
+label: 'anonymous user'
+weight: 0
+is_admin: false
+permissions:
+  - 'access comments'
+  - 'access content'
+  - 'create local_event content'
+  - 'use text format filtered_html'
+  - 'view files'

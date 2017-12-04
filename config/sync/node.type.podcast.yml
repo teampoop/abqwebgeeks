@@ -1,0 +1,18 @@
+uuid: f6faa109-64bc-47c7-a7d9-5e8f7b45c327
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus:
+      - main-menu
+    parent: 'main-menu:0:'
+name: podcast
+type: podcast
+description: 'because talking is what we do.'
+help: ''
+new_revision: false
+preview_mode: 1
+display_submitted: true
