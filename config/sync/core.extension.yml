@@ -5,6 +5,8 @@ module:
   block: 0
   block_content: 0
   breakpoint: 0
+  calendar: 0
+  calendar_datetime: 0
   ckeditor: 0
   color: 0
   comment: 0
@@ -12,6 +14,7 @@ module:
   contact: 0
   contextual: 0
   datetime: 0
+  datetime_range: 0
   dblog: 0
   dynamic_page_cache: 0
   editor: 0
@@ -22,8 +25,10 @@ module:
   help: 0
   history: 0
   image: 0
+  jsonapi: 0
   link: 0
   menu_ui: 0
+  metatag: 0
   migrate: 0
   migrate_drupal: 0
   migrate_drupal_ui: 0
@@ -34,15 +39,19 @@ module:
   quickedit: 0
   rdf: 0
   search: 0
+  serialization: 0
   shortcut: 0
   stage_file_proxy: 0
   system: 0
   taxonomy: 0
+  telephone: 0
   text: 0
+  token: 0
   toolbar: 0
   tour: 0
   update: 0
   user: 0
+  views_templates: 0
   views_ui: 0
   menu_link_content: 1
   views: 10
