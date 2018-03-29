@@ -1,0 +1,4 @@
+name: abqwebgeeks
+recipe: drupal7
+config:
+  webroot: .
