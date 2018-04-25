@@ -8,3 +8,4 @@ sites/*/private
 .well-knkown/
 .well-known/
 .DS_Store
+.sql.gz

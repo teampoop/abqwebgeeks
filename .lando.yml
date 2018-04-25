@@ -2,3 +2,4 @@ name: abqwebgeeks
 recipe: drupal7
 config:
   webroot: .
+  database: mysql:5.6
