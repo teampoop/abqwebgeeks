@@ -13,10 +13,19 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
   var mediaPluginDefinition = {
     icons: 'media',
     requires: ['button'],
-    // Check if this instance has widget support. All the default distributions
-    // of the editor have the widget plugin disabled by default.
-    hasWidgetSupport: typeof(CKEDITOR.plugins.registered.widget) != 'undefined',
+    // All the default distributions of the editor have the widget plugin
+    // disabled by default.
+    hasWidgetSupport: false,
     mediaLegacyWrappers: false,
+    hidpi: true,
+    onLoad: function() {
+      // Check if this instance has widget support.
+      mediaPluginDefinition.hasWidgetSupport = typeof(CKEDITOR.plugins.registered.widget) != 'undefined';
+      // Add dependency to widget plugin if possible.
+      if (parseFloat(CKEDITOR.version) >= 4.3 && mediaPluginDefinition.hasWidgetSupport) {
+        mediaPluginDefinition.requires.push('widget');
+      }
+    },
 
     // Wrap Drupal plugin in a proxy plugin.
     init: function(editor){
@@ -29,9 +38,9 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
             content: ''
           };
           var selection = editor.getSelection();
-
           if (selection) {
             data.node = selection.getSelectedElement();
+
             if (data.node) {
               data.node = data.node.$;
             }
@@ -48,15 +57,57 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
               data.content = data.node.parentNode.innerHTML;
             }
           }
+
+          // If we are inside another media element, we need to move the cursor to the end of the element
+          var selected_element = selection.getStartElement();
+          var parent = selected_element.getParent();
+          //if we are inside "a" tag and inside "span" (with class media-element)
+          if (selected_element.is('a') && parent.is('span') && parent.hasClass('media-element')) {
+            selection.selectElement(parent);
+            selected_ranges = selection.getRanges();
+            selected_ranges[0].collapse(false);
+            selection.selectRanges(selected_ranges);
+          }
+          //if we are outside "a" tag but inside "span" (with class media-element)
+          else if (selected_element.is('span') && selected_element.hasClass('media-element')) {
+              selection.selectElement(selected_element);
+              selected_ranges = selection.getRanges();
+              selected_ranges[0].collapse(false);
+              selection.selectRanges(selected_ranges);
+          }
           Drupal.settings.ckeditor.plugins['media'].invoke(data, Drupal.settings.ckeditor.plugins['media'], editor.name);
         }
       });
 
+      // Add a Ckeditor context menu item for editing already-inserted media.
+      if (editor.contextMenu) {
+        editor.addCommand('mediaConfigure', {
+          exec: function (editor) {
+            editor.execCommand('media');
+          },
+        });
+
+        editor.addMenuGroup('mediaGroup');
+        editor.addMenuItem('mediaConfigureItem', {
+          label: Drupal.settings.media_ckeditor.labels['settings'],
+          icon: this.path + 'images/icon.gif',
+          command: 'mediaConfigure',
+          group: 'mediaGroup'
+        });
+
+        editor.contextMenu.addListener(function(element) {
+          if (element.getAttribute('data-media-element') ||
+              element.find('[data-media-element]').count()) {
+            return { mediaConfigureItem: CKEDITOR.TRISTATE_OFF };
+          };
+        });
+      }
+
+      // Add the toolbar button.
       editor.ui.addButton( 'Media',
       {
-        label: 'Add media',
-        command: 'media',
-        icon: this.path + 'images/icon.gif'
+        label: Drupal.settings.media_ckeditor.labels['add'],
+        command: 'media'
       });
 
       var ckeditorversion = parseFloat(CKEDITOR.version);
@@ -83,10 +134,14 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
         CKEDITOR.dtd.$object['mediawrapper'] = 1;
       }
       function prepareDataForWysiwygMode(data) {
-        data = Drupal.media.filter.replaceTokenWithPlaceholder(data);
+        if (typeof Drupal.media !== 'undefined') {
+          data = Drupal.media.filter.replaceTokenWithPlaceholder(data);
+        }
         // Legacy media wrapper.
         mediaPluginDefinition.mediaLegacyWrappers = (data.indexOf("<!--MEDIA-WRAPPER-START-") !== -1);
-        data = data.replace(/<!--MEDIA-WRAPPER-START-(\d+)-->(.*?)<!--MEDIA-WRAPPER-END-\d+-->/gi, '<mediawrapper data="$1">$2</mediawrapper>');
+        if (mediaPluginDefinition.mediaLegacyWrappers) {
+          data = data.replace(/<!--MEDIA-WRAPPER-START-(\d+)-->(.*?)<!--MEDIA-WRAPPER-END-\d+-->/gi, '<mediawrapper data="$1">$2</mediawrapper>');
+        }
         return data;
       }
       function prepareDataForSourceMode(data) {
@@ -95,8 +150,10 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
         if (mediaPluginDefinition.mediaLegacyWrappers) {
           replacement = '<!--MEDIA-WRAPPER-START-$1-->$2<!--MEDIA-WRAPPER-END-$1-->';
         }
-        data = data.replace(/<mediawrapper data="(.*)">(.*?)<\/mediawrapper>/gi, replacement);
-        data = Drupal.media.filter.replacePlaceholderWithToken(data);
+        data = data.replace(/<mediawrapper data="(.*?)">(.*?)<\/mediawrapper>/gi, replacement);
+        if (typeof Drupal.media !== 'undefined') {
+          data = Drupal.media.filter.replacePlaceholderWithToken(data);
+        }
         return data;
       }
 
@@ -106,21 +163,45 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
         editor.widgets.add( 'mediabox',
         {
           button: 'Create a mediabox',
-          template: '<mediawrapper></mediawrapper>',
           editables: {},
           allowedContent: '*',
           upcast: function( element ) {
-            if (element.name != 'mediawrapper') {
-              // Ensure media tokens are converted to media placeholdes.
-              element.setHtml(prepareDataForWysiwygMode(element.getHtml()));
+            // Ensure media tokens are converted to media placeholders.
+            html = Drupal.media.filter.replaceTokenWithPlaceholder(element.getHtml());
+            // Only replace html if it's different
+            if (html != element.getHtml()) {
+              element.setHtml(html);
+              // CKEditor's setHtml() method automatically fixes the HTML that
+              // it receives, which means that if it gets an <li> without a
+              // <ul> or <ol> parent, it adds a <ul>. These extra <ul> tags just
+              // keep piling up every time this function runs. So check here to
+              // see if we may need to fix this.
+              if (element.children && element.children[0]) {
+                // We identify this by looking for a <ul> inside a <ul> or <ol>.
+                if (('ul' === element.name && 'ul' === element.children[0].name) ||
+                    ('ol' === element.name && 'ul' === element.children[0].name)) {
+                  // If this did happen, fix it by promoting the grandchildren
+                  // (ie, actual list items) to children.
+                  element.children = element.children[0].children;
+                }
+              }
             }
-            return element.name == 'mediawrapper';
+            return element.name == 'mediawrapper' || 'data-media-element' in element.attributes;
           },
 
           downcast: function( widgetElement ) {
-            var token = prepareDataForSourceMode(widgetElement.getOuterHtml());
-            return new CKEDITOR.htmlParser.text(token);
-            return element.name == 'mediawrapper';
+            var token = Drupal.media.filter.replacePlaceholderWithToken(widgetElement.getOuterHtml());
+            if (token) {
+              return new CKEDITOR.htmlParser.text(token);
+            }
+            return false;
+          },
+
+          init: function() {
+            // Add double-click functionality to the widget.
+            this.on('doubleclick', function(evt) {
+              editor.execCommand('media');
+            }, null, null, 5 );
           }
         });
       }
@@ -209,9 +290,6 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
       }
     }
   };
-  // Add dependency to widget plugin if possible.
-  if (parseFloat(CKEDITOR.version) >= 4.3 && mediaPluginDefinition.hasWidgetSupport) {
-    mediaPluginDefinition.requires.push('widget');
-  }
+
   CKEDITOR.plugins.add( 'media', mediaPluginDefinition);
 } )();
