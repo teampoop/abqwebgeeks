@@ -24,7 +24,7 @@
     <meta name="viewport" content="width=device-width">
   <?php endif; ?>
   <meta http-equiv="cleartype" content="on">
-  <link href='http://fonts.googleapis.com/css?family=Lato|Exo:400,700' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Lato|Exo:400,700' rel='stylesheet' type='text/css'>
   <?php print $styles; ?>
   <?php print $scripts; ?>
   <?php if ($add_html5_shim and !$add_respond_js): ?>
