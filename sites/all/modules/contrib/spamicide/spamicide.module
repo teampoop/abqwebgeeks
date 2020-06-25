@@ -26,13 +26,12 @@ function spamicide_menu() {
     'page callback' => 'drupal_get_form',
     'page arguments' => array('spamicide_admin_form'),
     'access arguments' => array('administer spamicide'),
-    //'access callback' => TRUE,
   );
   $items['admin/config/people/spamicide/form'] = array(
     'title' => 'Forms',
     'type' => MENU_DEFAULT_LOCAL_TASK,
     'weight' => -10,
-    'access callback' => TRUE,
+    'access arguments' => array('administer spamicide'),
   );
 
   // form for adding spamicide form protection
@@ -42,7 +41,6 @@ function spamicide_menu() {
     'page callback' => 'drupal_get_form',
     'page arguments' => array('spamicide_admin_adform_form', 6, TRUE),
     'access arguments' => array('administer spamicide'),
-    'access callback' => TRUE,
     'type' => MENU_CALLBACK,
   );
   $items['admin/config/people/spamicide/spamicide_form/delete/%'] = array(
@@ -50,7 +48,6 @@ function spamicide_menu() {
     'page callback' => 'drupal_get_form',
     'page arguments' => array('spamicide_delete_confirm', 6, TRUE),
     'access arguments' => array('administer spamicide'),
-    'access callback' => TRUE,
     'type' => MENU_CALLBACK,
   );
   return $items;
@@ -216,7 +213,8 @@ function spamicide_admin_form_validate($form, &$form_state) {
   }
   if (preg_match_all('[\W]', $form_state['values']['spamicide_dir'], $str)) {
     form_set_error('spamicide_dir', t("Only AlphaNumeric characters or the underscore please"));
-  }else if ($form_state['values']['spamicide_dir'] != variable_get('spamicide_dir')) {
+  }
+  elseif ($form_state['values']['spamicide_dir'] != variable_get('spamicide_dir')) {
     $path = 'public://' . $form_state['values']['spamicide_dir'];
     if (is_dir($path)) {
       form_set_error('spamicide_dir', t("Unable to create new directory, it already exists, please choose another name"));
@@ -371,7 +369,7 @@ function spamicide_form_alter(&$form, &$form_state, $form_id) {
         $spamicide_description = _spamicide_get_description();
         $spamicide_destination = drupal_get_destination();
         $form[$spamicide_field] = array(
-          '#title' => _spamicide_set_title($spamicide_field),
+          '#title' => check_plain(_spamicide_set_title(rtrim($spamicide_field))),
           '#type' => 'textfield',
           '#size' => 20,
           '#description' => check_plain($spamicide_description),

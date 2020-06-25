@@ -40,16 +40,18 @@ function _spamicide_get_field(&$form) {
  */
 function _spamicide_set_css_file($form_field, $op) {
   $spam_path = 'public://' . variable_get('spamicide_dir', 'spamicide');
-  $css_file = $spam_path . '/' . $form_field . '.css';
-  if ($op == 'delete') {
-    $file_check = db_query('SELECT DISTINCT(form_field) FROM {spamicide} WHERE form_field = :form_field', array(':form_field' => $form_field))->fetchCol();
-    if (!$file_check || !in_array($form_field , $file_check)) {
-      file_unmanaged_delete($css_file);
+  if (file_prepare_directory($spam_path, FILE_CREATE_DIRECTORY | FILE_MODIFY_PERMISSIONS)) {
+    $css_file = $spam_path . '/' . $form_field . '.css';
+    if ($op == 'delete') {
+      $file_check = db_query('SELECT DISTINCT(form_field) FROM {spamicide} WHERE form_field = :form_field', array(':form_field' => $form_field))->fetchCol();
+      if (!$file_check || !in_array($form_field, $file_check)) {
+        file_unmanaged_delete($css_file);
+      }
     }
-  }
-  if ($op == 'create' && !file_exists($css_file)) {
-    $css = 'div.' . _spamicide_get_css_class($form_field) . ' { display:none; }';
-    file_save_data($css, $css_file, FILE_EXISTS_REPLACE);
+    if ($op == 'create' && !file_exists($css_file)) {
+      $css = 'div.' . _spamicide_get_css_class($form_field) . ' { display:none; }';
+      file_save_data($css, $css_file, FILE_EXISTS_REPLACE);
+    }
   }
 }
 

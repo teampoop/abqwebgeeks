@@ -120,7 +120,7 @@ function spamicide_install() {
   _spamicide_set_css_file('feed_me', 'create');
   drupal_set_message(st('The installation of the spamicide table and some default entries was successful.'), 'status');
   drupal_set_message(st('You can now <a href="@spamicide_admin">configure the Spamicide module</a> for your site.',
-      array('@spamicide_admin' => url('admin/config/spamicide'))), 'status');
+      array('@spamicide_admin' => url('admin/config/people/spamicide'))), 'status');
 }
 
 /**
